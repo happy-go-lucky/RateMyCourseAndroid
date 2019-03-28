@@ -16,7 +16,7 @@ public class UserDataModel
 
 	public UserDataModel( String userId, String userName, String userEmail, byte[] password, String firstName, String lastName, String schoolName )
 	{
-		_userId = userId;
+		_userId = userId;//
 		_userName = userName;
 		_userEmail = userEmail;
 		_firstName = firstName;
