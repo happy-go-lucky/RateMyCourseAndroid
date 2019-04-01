@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.test.espresso:espresso-contrib:3.1.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/espresso-contrib-3.1.0.aar/20fdcac78ff3f46d665fd7fbf852fdbc/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/espresso-contrib-3.1.0.aar/20fdcac78ff3f46d665fd7fbf852fdbc/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/espresso-contrib-3.1.0.aar/ff725c49b1a37c01f5928a6cf41ddb05/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/espresso-contrib-3.1.0.aar/ff725c49b1a37c01f5928a6cf41ddb05/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
