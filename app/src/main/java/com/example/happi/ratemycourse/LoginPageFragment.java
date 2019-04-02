@@ -211,11 +211,13 @@ public class LoginPageFragment extends Fragment
 	private void testDB()
 	{
 		UserDataModel userDataSent = new UserDataModel(
-				"johndoe@blah.com",
-				_textEncoder.getEncodedText( "abc123" ),
-				"John",
-				"Doe",
-				"BCIT" );
+		        "1",
+                "John123",
+                "JohnD25@my.bcit.ca",
+                new byte[]{1,2,3,4},
+                "John",
+                "Doe",
+                "BC-BCIT");
 
 		_dataHandler.updateUser( userDataSent );
 
