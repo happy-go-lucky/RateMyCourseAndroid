@@ -3,7 +3,7 @@ package com.example.happi.ratemycourse;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CourseRating extends AppCompatActivity {
+public class CourseRatingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
