@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -104,16 +108,22 @@ public class MainPageFragment extends Fragment
 
 
 		_view = getView();
-		initScreenElements();
+        initScreenElements();
 		initDatabase();
 		testDB();
 		buildAutoCompleteList();
 	}
 
-	private void initScreenElements()
+	public void initScreenElements()
 	{
 		_searchTextView = _view.findViewById( R.id.autoCompleteTextView );
-		//_searchTextView.setOnItemClickListener(  );
+
+        _searchTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("TEST", parent.getItemAtPosition(position).toString());
+            }
+        });
 	}
 
 	private void initDatabase()
