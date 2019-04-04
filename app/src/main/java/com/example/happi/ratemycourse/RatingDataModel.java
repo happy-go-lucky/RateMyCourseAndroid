@@ -8,6 +8,8 @@ package com.example.happi.ratemycourse;
  */
 public class RatingDataModel {
 
+    private static int ratingID;
+
     // Rating metrics
     private int _homework;
     private int _reading;
@@ -30,6 +32,11 @@ public class RatingDataModel {
         _reading = reading;
         _usefulness = usefulness;
         _stress = stress;
+        ratingID += 1;
+    }
+
+    public int getRatingID() {
+        return ratingID;
     }
 
     public int getHomework() {
