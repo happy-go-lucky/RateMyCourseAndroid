@@ -27,43 +27,43 @@ public class CourseDataModel {
 		_instructorFirstName = instructor_firstname;
 	}
 
-	public int get_Courseid() {
+	public int getCourseid() {
 		return _courseid;
 	}
 
-	public void set_Courseid(int course_id) {
+	public void setCourseid(int course_id) {
 		_courseNumber = course_id;
 	}
 
-	public CourseMode get_CourseMode() {
+	public CourseMode getCourseMode() {
 		return _courseMode;
 	}
 
-	public void set_CourseMode(CourseMode mode) {
+	public void setCourseMode(CourseMode mode) {
 		_courseMode = mode;
 	}
 
-	public int get_CourseNumber() {
+	public int getCourseNumber() {
 		return _courseNumber;
 	}
 
-	public void set_CourseNumber(int course_number) {
+	public void setCourseNumber(int course_number) {
 		_courseNumber = course_number;
 	}
 
-	public CourseCode get_CourseCode() {
+	public CourseCode getCourseCode() {
 		return _courseCode;
 	}
 
-	public void set_CourseCode(CourseCode course_name) {
+	public void setCourseCode(CourseCode course_name) {
 		_courseCode = course_name;
 	}
 
-	public int get_YearOffered() {
+	public int getYearOffered() {
 		return _yearOffered;
 	}
 
-	public void set_YearOffered(int yearOffered) {
+	public void setYearOffered(int yearOffered) {
 		_yearOffered = yearOffered;
 	}
 
@@ -75,7 +75,7 @@ public class CourseDataModel {
 //        _semesterOffered = value;
 //    }
 
-	public String get_InstructorLastName() {
+	public String getInstructorLastName() {
 		return _instructorLastName;
 	}
 
@@ -84,7 +84,7 @@ public class CourseDataModel {
 	}
 
 
-	public String get_InstructorFirstName() {
+	public String getInstructorFirstName() {
 		return _instructorFirstName;
 	}
 
