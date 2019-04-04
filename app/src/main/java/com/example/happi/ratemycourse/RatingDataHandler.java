@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
+//TODO: Complete getAverage... method
 public class RatingDataHandler extends SQLiteOpenHelper {
 
     private static final int DB_VERSION = 1;
@@ -258,7 +259,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return courseRatingsList;
     }
 
-    //TO DO:
     /**
      * Gets rounded average of each criteria per course.
      *
@@ -298,7 +298,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return resultList;
     }
 
-    //TODO: add ratingID, courseCode, and CourseNumber? Is this necessary? I don't think so. - BH, Apr 4
     public RatingDataModel extractAllDataFromCursor(Cursor rowCursor)
     {
         if (!isValidCursor(rowCursor))
