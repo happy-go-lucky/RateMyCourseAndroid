@@ -95,14 +95,14 @@ public class CourseDataHandler extends SQLiteOpenHelper
         //_db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put( _dbColNames.get( DBCols.COURSE_ID ).name(), course.get_Courseid() );
-        values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.get_CourseMode().toString() );
-        values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.get_CourseNumber() );
-        values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.get_CourseCode().toString() );
-        values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), course.get_YearOffered() );
+        values.put( _dbColNames.get( DBCols.COURSE_ID ).name(), course.getCourseid() );
+        values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.getCourseMode().toString() );
+        values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.getCourseNumber() );
+        values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.getCourseCode().toString() );
+        values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), course.getYearOffered() );
         //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), course.getSemesterOffered().toString() );
-        values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), course.get_InstructorLastName() );
-        values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), course.get_InstructorFirstName() );
+        values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), course.getInstructorLastName() );
+        values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), course.getInstructorFirstName() );
 
         _db.insert( TABLE_NAME, null, values );
     }
@@ -163,8 +163,8 @@ public class CourseDataHandler extends SQLiteOpenHelper
 
         String[] whereArgs =
                 {
-                        courseData.get_CourseCode().toString(),
-                        String.valueOf( courseData.get_CourseNumber() )
+                        courseData.getCourseCode().toString(),
+                        String.valueOf( courseData.getCourseNumber() )
                 };
 
         Cursor cursor = _db.rawQuery( "SELECT * FROM " + TABLE_NAME + " WHERE " + whereClause, whereArgs );
@@ -180,11 +180,11 @@ public class CourseDataHandler extends SQLiteOpenHelper
         if ( isDuplicateData( courseData ) )
         {
             ContentValues values = new ContentValues();
-            values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), courseData.get_YearOffered() );
-            values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), courseData.get_CourseMode().toString() );
+            values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), courseData.getYearOffered() );
+            values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), courseData.getCourseMode().toString() );
             //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), courseData.getSemesterOffered().toString() );
-            values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), courseData.get_InstructorLastName() );
-            values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), courseData.get_InstructorFirstName() );
+            values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), courseData.getInstructorLastName() );
+            values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), courseData.getInstructorFirstName() );
 
             String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
                     + " = ? AND "
@@ -192,8 +192,8 @@ public class CourseDataHandler extends SQLiteOpenHelper
 
             String[] whereArgs =
                     {
-                            courseData.get_CourseCode().toString(),
-                            String.valueOf( courseData.get_CourseNumber() )
+                            courseData.getCourseCode().toString(),
+                            String.valueOf( courseData.getCourseNumber() )
                     };
 
             _db.update( TABLE_NAME, values, whereClause, whereArgs );
@@ -278,8 +278,8 @@ public class CourseDataHandler extends SQLiteOpenHelper
         CourseDataModel.CourseCode db_courseCode = CourseDataModel.CourseCode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_CODE ).index() ) );
         int db_yearOffered = rowCursor.getInt( _dbColNames.get( DBCols.YEAR_OFFERED ).index() );
         //CourseDataModel.CourseSemester db_semesterOffered = CourseDataModel.CourseSemester.valueOf( rowCursor.getString( _dbColNames.get( DBCols.SEMESTER_OFFERED ).index() ) );
-        String db_instructorLastName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR ).index() );
-        String db_instructorFirstName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR ).index() );
+        String db_instructorLastName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME).index() );
+        String db_instructorFirstName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME).index() );
         CourseDataModel.CourseMode db_courseMode = CourseDataModel.CourseMode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_MODE ).index() ) );
 
 
