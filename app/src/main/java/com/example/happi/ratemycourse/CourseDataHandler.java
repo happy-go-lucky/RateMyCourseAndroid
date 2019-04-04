@@ -21,7 +21,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
 
     public enum DBCols
     {
-        COURSE_ID,
+//        COURSE_ID,
         COURSE_MODE,
         COURSE_NUMBER,
         COURSE_CODE,
@@ -47,7 +47,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         int index = 0;
 
 
-        _dbColNames.put( DBCols.COURSE_ID, new EnumHelper( "course_ID", index++ ) );
+//        _dbColNames.put( DBCols.COURSE_ID, new EnumHelper( "course_ID", index++ ) );
         _dbColNames.put( DBCols.COURSE_MODE, new EnumHelper( "course_mode", index++ ) );
         _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
         _dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ) );
@@ -67,7 +67,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
     public void onCreate( SQLiteDatabase db )
     {
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                + _dbColNames.get( DBCols.COURSE_ID ).name() + DATATYPE_INT + SEPARATOR_COMMA
+//                + _dbColNames.get( DBCols.COURSE_ID ).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
@@ -95,7 +95,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         //_db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put( _dbColNames.get( DBCols.COURSE_ID ).name(), course.getCourseid() );
+//        values.put( _dbColNames.get( DBCols.COURSE_ID ).name(), course.getCourseid() );
         values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.getCourseMode().toString() );
         values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.getCourseNumber() );
         values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.getCourseCode().toString() );
@@ -117,8 +117,8 @@ public class CourseDataHandler extends SQLiteOpenHelper
 //        value = _dbColNames.get( DBCols.COURSE_NUMBER );
 //        columns[value.index()] = value.name();
 
-        value = _dbColNames.get( DBCols.COURSE_ID );
-        columns[value.index()] = value.name();
+//        value = _dbColNames.get( DBCols.COURSE_ID );
+//        columns[value.index()] = value.name();
 
         value = _dbColNames.get( DBCols.COURSE_CODE );
         columns[value.index()] = value.name();
@@ -285,12 +285,12 @@ public class CourseDataHandler extends SQLiteOpenHelper
 
         CourseDataModel courseData = new CourseDataModel
                 (
+                        db_courseMode,
                         db_courseNumber,
-                        db_yearOffered,
                         db_courseCode,
+                        db_yearOffered,
                         db_instructorLastName,
-                        db_instructorFirstName,
-                        db_courseMode
+                        db_instructorFirstName
                 );
 
         return courseData;
