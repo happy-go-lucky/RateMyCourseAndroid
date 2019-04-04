@@ -311,31 +311,35 @@ public class CourseDataHandler extends SQLiteOpenHelper
 					retVal = rowCursor.getString( colIndex );
 				}
 				*/
-                retVal += rowCursor.getString( colIndex );
-                ii++;
-            }
-        }
+				retVal += rowCursor.getString( colIndex );
+				ii++;
+			}
+		}
 
-        return retVal;
-    }
+		return retVal;
+	}
 
-    private void debugPrintRowCursor( Cursor rowData )
-    {
-        if ( isValidCursor( rowData ) )
-        {
-            int ii = 0;
-            Log.d( LOG_TAG, "testRowCursor" );
-            while ( ii < rowData.getColumnCount() )
-            {
-                Log.d( "row " + ii + ": ", rowData.getString( ii ) );
-                ii++;
-            }
-        }
-    }
-//////
-    private boolean isValidCursor( Cursor cursor )
-    {
-        return ( cursor != null ) && ( cursor.getCount() > 0 ) && ( cursor.getColumnCount() > 0 );
+	private void debugPrintRowCursor( Cursor rowData )
+	{
+		if ( isValidCursor( rowData ) )
+		{
+			int ii = 0;
+			Log.d( LOG_TAG, "testRowCursor" );
+			while ( ii < rowData.getColumnCount() )
+			{
+				Log.d( "row " + ii + ": ", rowData.getString( ii ) );
+				ii++;
+			}
+		}
+	}
+
+	private boolean isValidCursor( Cursor cursor )
+	{
+		return ( cursor != null ) && ( cursor.getCount() > 0 ) && ( cursor.getColumnCount() > 0 );
+	}
+
+	public static String getTableName() {
+	    return TABLE_NAME;
     }
 	/*
 	public boolean checkDataBaseExists()
