@@ -7,7 +7,7 @@ public class CourseDataModel {
 
 	public enum CourseCode {COMP, MATH, LIBS};
 
-	//	private int _courseid;
+//	private int _courseid;
 	private CourseMode _courseMode;
 	private int _courseNumber;
 	private CourseCode _courseCode;

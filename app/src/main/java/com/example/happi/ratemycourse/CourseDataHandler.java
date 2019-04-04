@@ -15,7 +15,8 @@ public class CourseDataHandler extends SQLiteOpenHelper
     private static final String LOG_TAG = "CourseDataHandler";
     public enum DBCols
     {
-        //        COURSE_ID,
+
+//        COURSE_ID,
         COURSE_MODE,
         COURSE_NUMBER,
         COURSE_CODE,
@@ -35,6 +36,8 @@ public class CourseDataHandler extends SQLiteOpenHelper
         // build the enum map for later use
         _dbColNames = new EnumMap<DBCols, EnumHelper>( DBCols.class );
         int index = 0;
+
+
 //        _dbColNames.put( DBCols.COURSE_ID, new EnumHelper( "course_ID", index++ ) );
         _dbColNames.put( DBCols.COURSE_MODE, new EnumHelper( "course_mode", index++ ) );
         _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
@@ -75,6 +78,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
     {
         //_db = getWritableDatabase();
         ContentValues values = new ContentValues();
+
 //        values.put( _dbColNames.get( DBCols.COURSE_ID ).name(), course.getCourseid() );
         values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.getCourseMode().toString() );
         values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.getCourseNumber() );
@@ -83,6 +87,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), course.getSemesterOffered().toString() );
         values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), course.getInstructorLastName() );
         values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), course.getInstructorFirstName() );
+
         _db.insert( TABLE_NAME, null, values );
     }
     public CourseDataModel getCourse( CourseDataModel.CourseCode courseId, CourseDataModel.CourseCode courseCode , int courseNumber )
@@ -144,6 +149,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
             //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), courseData.getSemesterOffered().toString() );
             values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), courseData.getInstructorLastName() );
             values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), courseData.getInstructorFirstName() );
+
             String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
                     + " = ? AND "
                     + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
