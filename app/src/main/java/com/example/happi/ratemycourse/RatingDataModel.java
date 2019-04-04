@@ -63,5 +63,11 @@ public class RatingDataModel {
     public void setStress(int stressRating) {
         _stress = stressRating;
     }
-    
+
+    @Override
+    public String toString() {
+        return String.format("Homework: %s, " + "Reading: %s, " +
+                        "Usefulness: %s, " + "Stress: %s\n",
+                _homework, _reading, _usefulness, _stress);
+    }
 }
