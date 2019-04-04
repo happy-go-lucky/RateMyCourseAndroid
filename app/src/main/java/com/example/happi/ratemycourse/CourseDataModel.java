@@ -7,7 +7,7 @@ public class CourseDataModel {
 
 	public enum CourseCode {COMP, MATH, LIBS};
 
-	private int _courseid;
+//	private int _courseid;
 	private CourseMode _courseMode;
 	private int _courseNumber;
 	private CourseCode _courseCode;
@@ -17,23 +17,23 @@ public class CourseDataModel {
 	private CourseSemester _semesterOffered;
 
 
-	public CourseDataModel(int course_id, CourseMode mode, int course_number, CourseCode course_name, int year_offered, String instructor_lastname, String instructor_firstname) {
-		_courseid = course_id;
+	public CourseDataModel(CourseMode mode, int course_number, CourseCode courseCode, int year_offered, String instructor_lastname, String instructor_firstname) {
+//		_courseid = course_id;
 		_courseMode = mode;
 		_courseNumber = course_number;
-		_courseCode = course_name;
+		_courseCode = courseCode;
 		_yearOffered = year_offered;
 		_instructorLastName = instructor_lastname;
 		_instructorFirstName = instructor_firstname;
 	}
 
-	public int getCourseid() {
-		return _courseid;
-	}
+//	public int getCourseid() {
+//		return _courseid;
+//	}
 
-	public void setCourseid(int course_id) {
-		_courseNumber = course_id;
-	}
+//	public void setCourseid(int course_id) {
+//		_courseNumber = course_id;
+//	}
 
 	public CourseMode getCourseMode() {
 		return _courseMode;
@@ -95,7 +95,7 @@ public class CourseDataModel {
 
 	@Override
 	public String toString() {
-		return String.format("Id: %s, Course Mode: %s, Course Number: %s, Course Name: %s, Year: %s, Instructor Last Name: %s, Instructor First Name: %s\n",
-				_courseid, _courseMode, _courseNumber, _courseCode, _yearOffered, _instructorLastName, _instructorFirstName);
+		return String.format("Course Mode: %s, Course Number: %s, Course Name: %s, Year: %s, Instructor Last Name: %s, Instructor First Name: %s\n",
+				_courseMode, _courseNumber, _courseCode, _yearOffered, _instructorLastName, _instructorFirstName);
 	}
 }
