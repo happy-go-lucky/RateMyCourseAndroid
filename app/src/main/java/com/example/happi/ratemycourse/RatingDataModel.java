@@ -32,4 +32,36 @@ public class RatingDataModel {
         _stress = stress;
     }
 
+    public int getHomework() {
+        return _homework;
+    }
+
+    public void setHomework(int homeworkAmount) {
+        _homework = homeworkAmount;
+    }
+
+    public int getReading() {
+        return _reading;
+    }
+
+    public void setReading(int readingAmount) {
+        _reading = readingAmount;
+    }
+
+    public int getUsefulness() {
+        return _usefulness;
+    }
+
+    public void setUsefulness(int usefulnessRating) {
+        _usefulness = usefulnessRating;
+    }
+
+    public int getStress() {
+        return _stress;
+    }
+
+    public void setStress(int stressRating) {
+        _stress = stressRating;
+    }
+    
 }
