@@ -2,6 +2,7 @@ package com.example.happi.ratemycourse;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -134,7 +135,9 @@ public class MainPageFragment extends Fragment
 		_searchTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Log.d("TEST", parent.getItemAtPosition(position).toString());
+				Intent intent = new Intent(getContext(), CourseRatingActivity.class);
+				intent.putExtra("COURSE_NAME", parent.getItemAtPosition(position).toString());
+				startActivity(intent);
 			}
 		});
 	}

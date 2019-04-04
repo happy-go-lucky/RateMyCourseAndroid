@@ -1,7 +1,9 @@
 package com.example.happi.ratemycourse;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class CourseRatingActivity extends AppCompatActivity {
 
@@ -10,6 +12,11 @@ public class CourseRatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_rating);
 
-        // TODO: get course rating data and set textView values. If none, use default.
+        Intent intent = getIntent();
+        String courseName = intent.getStringExtra("COURSE_NAME");
+
+        // TODO: get course rating data and set textView values. If none, use defaults or display none.
+        TextView courseNameTextView = findViewById(R.id.courseNameHeader);
+        courseNameTextView.setText(courseName);
     }
 }
