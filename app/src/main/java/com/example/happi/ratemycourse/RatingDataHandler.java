@@ -73,8 +73,25 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         onCreate( db );
     }
 
+    /**
+     * Add rating of each criteria to database.
+     *
+     * @param rating instance of user course ratings per criteria
+     */
     private void addRating( RatingDataModel rating) {
+        //_db = getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put( _dbColNames.get( DBCols.HOMEWORK_AMOUNT ).name(),
+                rating.getHomework() );
+        values.put( _dbColNames.get( DBCols.READING_AMOUNT ).name(),
+                rating.getReading() );
+        values.put( _dbColNames.get( DBCols.USEFULNESS ).name(),
+                rating.getUsefulness() );
+        values.put( _dbColNames.get( DBCols.STRESS_LEVEL ).name(),
+                rating.getStress() );
+
+        _db.insert( TABLE_NAME, null, values );
     }
 
     private void getRating ( RatingDataModel.RatingModel) {
