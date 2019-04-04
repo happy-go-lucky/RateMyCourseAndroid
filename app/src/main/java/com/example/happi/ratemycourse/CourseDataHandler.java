@@ -7,282 +7,300 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class CourseDataHandler extends SQLiteOpenHelper
 {
-	private static final int DB_VERSION = 1;
-	private static final String DB_NAME = "rate_my_course";
-	private static final String TABLE_NAME = "course_data";
-	private static final String LOG_TAG = "CourseDataHandler";
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "rate_my_course";
+    private static final String TABLE_NAME = "course_data";
+    private static final String LOG_TAG = "CourseDataHandler";
 
-	public enum DBCols
-	{
-		COURSE_NUMBER,
-		YEAR_OFFERED,
-		COURSE_CODE,
-		COURSE_MODE,
-		SEMESTER_OFFERED,
-		INSTRUCTOR
-	};
 
-	private EnumMap<DBCols, EnumHelper> _dbColNames;
-	private SQLiteDatabase _db;
+    public enum DBCols
+    {
+        COURSE_ID,
+        COURSE_MODE,
+        COURSE_NUMBER,
+        COURSE_CODE,
+        YEAR_OFFERED,
+        INSTRUCTOR_LASTNAME,
+        INSTRUCTOR_FIRSTNAME;
+    }
 
-	private static final String DATATYPE_INT = " INTEGER ";
-	private static final String DATATYPE_TEXT = " TEXT ";
-	private static final String SEPARATOR_COMMA = ",";
+    private EnumMap<DBCols, EnumHelper> _dbColNames;
+    private SQLiteDatabase _db;
 
-	public CourseDataHandler( Context context )
-	{
-		// build the DB
-		super( context, DB_NAME, null, DB_VERSION );
+    private static final String DATATYPE_INT = " INTEGER ";
+    private static final String DATATYPE_TEXT = " TEXT ";
+    private static final String SEPARATOR_COMMA = ",";
 
-		// build the enum map for later use
-		_dbColNames = new EnumMap<DBCols, EnumHelper>( DBCols.class );
-		int index = 0;
-		_dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
-		_dbColNames.put( DBCols.YEAR_OFFERED, new EnumHelper( "year_offered", index++ ) );
-		_dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ) );
-		_dbColNames.put( DBCols.COURSE_MODE, new EnumHelper( "course_mode", index++ ) );
-		_dbColNames.put( DBCols.SEMESTER_OFFERED, new EnumHelper( "semester_offered", index++ ) );
-		_dbColNames.put( DBCols.INSTRUCTOR, new EnumHelper( "instructor", index++ ) );
+    public CourseDataHandler( Context context )
+    {
+        // build the DB
+        super( context, DB_NAME, null, DB_VERSION );
 
-		_db = getWritableDatabase();
-		onCreate( _db );
-	}
+        // build the enum map for later use
+        _dbColNames = new EnumMap<DBCols, EnumHelper>( DBCols.class );
+        int index = 0;
 
-	// if the DB exists already, this will not be called automatically
-	@Override
-	public void onCreate( SQLiteDatabase db )
-	{
-		String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-				+ _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_INT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.YEAR_OFFERED ).name() + DATATYPE_INT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.SEMESTER_OFFERED ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.INSTRUCTOR ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ "PRIMARY KEY (" + _dbColNames.get( DBCols.COURSE_CODE ).name() + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.COURSE_NUMBER ).name() + ")" + ")";
 
-		db.execSQL( CREATE_COURSE_TABLE );
-	}
+        _dbColNames.put( DBCols.COURSE_ID, new EnumHelper( "course_ID", index++ ) );
+        _dbColNames.put( DBCols.COURSE_MODE, new EnumHelper( "course_mode", index++ ) );
+        _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
+        _dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ) );
+        _dbColNames.put( DBCols.YEAR_OFFERED, new EnumHelper( "year_offered", index++ ) );
+//        _dbColNames.put( DBCols.SEMESTER_OFFERED, new EnumHelper( "semester_offered", index++ ) );
+        _dbColNames.put( DBCols.INSTRUCTOR_LASTNAME, new EnumHelper( "instructor lastname", index++ ) );
+        //_dbColNames.put( DBCols.SEMESTER_OFFERED, new EnumHelper( "semester_offered", index++ ) );
+        _dbColNames.put( DBCols.INSTRUCTOR_FIRSTNAME, new EnumHelper( "instructor firstname", index++ ) );
 
-	@Override
-	public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion )
-	{
-		// Drop older table if existed
-		db.execSQL( "DROP TABLE IF EXISTS " + TABLE_NAME );
 
-		// Create tables again
-		onCreate( db );
-	}
+        _db = getWritableDatabase();
+        onCreate( _db );
+    }
 
-	private void addCourse( CourseDataModel course )
-	{
-		//_db = getWritableDatabase();
-		ContentValues values = new ContentValues();
+    // if the DB exists already, this will not be called automatically
+    @Override
+    public void onCreate( SQLiteDatabase db )
+    {
+        String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+                + _dbColNames.get( DBCols.COURSE_ID ).name() + DATATYPE_INT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_INT + SEPARATOR_COMMA
+                //+ _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.YEAR_OFFERED ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + "PRIMARY KEY (" + _dbColNames.get( DBCols.COURSE_CODE ).name() + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + ")" + ")";
 
-		values.put( _dbColNames.get( DBCols.COURSE_NUMBER ).name(), course.getCourseNumber() );
-		values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), course.getYearOffered() );
-		values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.getCourseCode().toString() );
-		values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.getCourseMode().toString() );
-		values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), course.getSemesterOffered().toString() );
-		values.put( _dbColNames.get( DBCols.INSTRUCTOR ).name(), course.getInstructor() );
+        db.execSQL( CREATE_COURSE_TABLE );
+    }
 
-		_db.insert( TABLE_NAME, null, values );
-	}
+    @Override
+    public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion )
+    {
+        // Drop older table if existed
+        db.execSQL( "DROP TABLE IF EXISTS " + TABLE_NAME );
 
-	public CourseDataModel getCourse( CourseDataModel.CourseCode courseCode , int courseNumber )
-	{
-		//_db = getReadableDatabase();
+        // Create tables again
+        onCreate( db );
+    }
 
-		String[] columns = new String[_dbColNames.size()];
-		EnumHelper value = _dbColNames.get( DBCols.COURSE_NUMBER );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.COURSE_CODE );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.YEAR_OFFERED );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.COURSE_MODE );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.SEMESTER_OFFERED );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.INSTRUCTOR );
-		columns[value.index()] = value.name();
+    private void addCourse( CourseDataModel course )
+    {
+        //_db = getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-		String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
-				+ " = ? AND "
-				+ _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
+        values.put( _dbColNames.get( DBCols.COURSE_ID ).name(), course.get_Courseid() );
+        values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.get_CourseMode().toString() );
+        values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.get_CourseNumber().toString() );
+        values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.get_CourseCode().toString() );
+        values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), course.get_YearOffered() );
+        //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), course.getSemesterOffered().toString() );
+        values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), course.get_InstructorLastName() );
+        values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), course.get_InstructorFirstName() );
 
-		String[] whereArgs =
-			{
-				courseCode.toString(),
-				String.valueOf( courseNumber )
-			};
+        _db.insert( TABLE_NAME, null, values );
+    }
 
-		Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
-				whereArgs, null, null, null, null );
+    public CourseDataModel getCourse( CourseDataModel.CourseCode courseCode , int courseNumber )
+    {
+        //_db = getReadableDatabase();
 
-		if ( isValidCursor( cursor ) )
-		{
-			cursor.moveToFirst();
-		}
+        String[] columns = new String[_dbColNames.size()];
+        EnumHelper value = _dbColNames.get( DBCols.COURSE_NUMBER );
 
-		return extractAllDataFromCursor( cursor );
-	}
+        columns[value.index()] = value.name();
+        value = _dbColNames.get( DBCols.COURSE_CODE );
+        columns[value.index()] = value.name();
 
-	public boolean isDuplicateData( CourseDataModel courseData )
-	{
-		//_db = getReadableDatabase();
+        value = _dbColNames.get( DBCols.YEAR_OFFERED );
+        columns[value.index()] = value.name();
 
-		String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
-				+ " = ? AND "
-				+ _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
+        value = _dbColNames.get( DBCols.COURSE_MODE );
+        columns[value.index()] = value.name();
 
-		String[] whereArgs =
-				{
-					courseData.getCourseCode().toString(),
-					String.valueOf( courseData.getCourseNumber() )
-				};
+//        value = _dbColNames.get( DBCols.SEMESTER_OFFERED );
+//        columns[value.index()] = value.name();
 
-		Cursor cursor = _db.rawQuery( "SELECT * FROM " + TABLE_NAME + " WHERE " + whereClause, whereArgs );
-		boolean state = isValidCursor( cursor );
+        value = _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME );
+        columns[value.index()] = value.name();
 
-		return state;
-	}
+        String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
+                + " = ? AND "
+                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
 
-	public void updateCourse( CourseDataModel courseData )
-	{
-		//_db = getWritableDatabase();
+        String[] whereArgs =
+                {
+                        courseCode.toString(),
+                        String.valueOf( courseNumber )
+                };
 
-		if ( isDuplicateData( courseData ) )
-		{
-			ContentValues values = new ContentValues();
-			values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), courseData.getYearOffered() );
-			values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), courseData.getCourseMode().toString() );
-			values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), courseData.getSemesterOffered().toString() );
-			values.put( _dbColNames.get( DBCols.INSTRUCTOR ).name(), courseData.getInstructor() );
+        Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
+                whereArgs, null, null, null, null );
 
-			String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
-					+ " = ? AND "
-					+ _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
+        if ( isValidCursor( cursor ) )
+        {
+            cursor.moveToFirst();
+        }
 
-			String[] whereArgs =
-					{
-							courseData.getCourseCode().toString(),
-							String.valueOf( courseData.getCourseNumber() )
-					};
+        return extractAllDataFromCursor( cursor );
+    }
 
-			_db.update( TABLE_NAME, values, whereClause, whereArgs );
-		}
-		else
-		{
-			addCourse( courseData );
-		}
-	}
+    public boolean isDuplicateData( CourseDataModel courseData )
+    {
+        //_db = getReadableDatabase();
 
-	public void dropTable( String tableName, boolean confirmation )
-	{
-		if ( confirmation )
-		{
-			//SQLiteDatabase db = getWritableDatabase();
-			_db.execSQL( "DROP TABLE IF EXISTS " + tableName );
-			_db.close();
-		}
-	}
+        String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
+                + " = ? AND "
+                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
 
-	public ArrayList<CourseDataModel> getAllEntries()
-	{
-		ArrayList<CourseDataModel> resultList = null;
+        String[] whereArgs =
+                {
+                        courseData.getCourseCode().toString(),
+                        String.valueOf( courseData.getCourseNumber() )
+                };
 
-		//_db = getWritableDatabase();
+        Cursor cursor = _db.rawQuery( "SELECT * FROM " + TABLE_NAME + " WHERE " + whereClause, whereArgs );
+        boolean state = isValidCursor( cursor );
 
-		String[] columns = new String[_dbColNames.size()];
-		EnumHelper value = _dbColNames.get( DBCols.COURSE_NUMBER );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.COURSE_CODE );
-		columns[value.index()] = value.name();
+        return state;
+    }
 
-		Cursor cursor = _db.query( TABLE_NAME, columns, null, null, null, null, null, null );
+    public void updateCourse( CourseDataModel courseData )
+    {
+        //_db = getWritableDatabase();
 
-		if ( isValidCursor( cursor ) )
-		{
-			resultList = new ArrayList<CourseDataModel>();
-			int ii = 0;
-			while ( ii < cursor.getCount() )
-			{
-				cursor.moveToPosition( ii );
-				resultList.add( extractAllDataFromCursor( cursor ) );
-				ii++;
-			}
-		}
+        if ( isDuplicateData( courseData ) )
+        {
+            ContentValues values = new ContentValues();
+            values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), courseData.get_YearOffered() );
+            values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), courseData.get_CourseMode().toString() );
+            //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), courseData.getSemesterOffered().toString() );
+            values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), courseData.get_InstructorLastName() );
+            values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), courseData.get_InstructorFirstName() );
 
-		return resultList;
-	}
+            String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
+                    + " = ? AND "
+                    + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
 
-	public ArrayList<String> getAllCourseIds()
-	{
-		//_db = getWritableDatabase();
+            String[] whereArgs =
+                    {
+                            courseData.get_CourseCode().toString(),
+                            String.valueOf( courseData.get_CourseNumber() )
+                    };
 
-		ArrayList<String> courseIdList = null;
-		Cursor cursor = _db.rawQuery( "SELECT " + _dbColNames.get( DBCols.COURSE_CODE ).name() + ", "
-				+ _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " FROM " + TABLE_NAME , null );
+            _db.update( TABLE_NAME, values, whereClause, whereArgs );
+        }
+        else
+        {
+            addCourse( courseData );
+        }
+    }
 
-		if ( isValidCursor( cursor ) )
-		{
-			courseIdList = new ArrayList<String>();
-			String[] columnList = { _dbColNames.get( DBCols.COURSE_CODE ).name(), _dbColNames.get( DBCols.COURSE_NUMBER ).name() };
-			int ii = 0;
-			while ( ii < cursor.getCount() )
-			{
-				cursor.moveToPosition( ii );
-				courseIdList.add( extractDataFromCursor( cursor, columnList ) );
-				ii++;
-			}
-		}
+    public void dropTable( String tableName, boolean confirmation )
+    {
+        if ( confirmation )
+        {
+            //SQLiteDatabase db = getWritableDatabase();
+            _db.execSQL( "DROP TABLE IF EXISTS " + tableName );
+            _db.close();
+        }
+    }
 
-		return courseIdList;
-	}
+    public ArrayList<CourseDataModel> getAllEntries()
+    {
+        ArrayList<CourseDataModel> resultList = null;
 
-	public CourseDataModel extractAllDataFromCursor( Cursor rowCursor )
-	{
-		if ( !isValidCursor( rowCursor ) )
-		{
-			return null;
-		}
+        //_db = getWritableDatabase();
 
-		int db_courseNumber = rowCursor.getInt( _dbColNames.get( DBCols.COURSE_NUMBER ).index() );
-		CourseDataModel.CourseCode db_courseCode = CourseDataModel.CourseCode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_CODE ).index() ) );
-		int db_yearOffered = rowCursor.getInt( _dbColNames.get( DBCols.YEAR_OFFERED ).index() );
-		CourseDataModel.CourseSemester db_semesterOffered = CourseDataModel.CourseSemester.valueOf( rowCursor.getString( _dbColNames.get( DBCols.SEMESTER_OFFERED ).index() ) );
-		String db_instructorName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR ).index() );
-		CourseDataModel.CourseMode db_courseMode = CourseDataModel.CourseMode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_MODE ).index() ) );
+        String[] columns = new String[_dbColNames.size()];
+        EnumHelper value = _dbColNames.get( DBCols.COURSE_NUMBER );
+        columns[value.index()] = value.name();
+        value = _dbColNames.get( DBCols.COURSE_CODE );
+        columns[value.index()] = value.name();
 
-		CourseDataModel courseData = new CourseDataModel
-				(
-						db_courseNumber,
-						db_yearOffered,
-						db_semesterOffered,
-						db_courseCode,
-						db_instructorName,
-						db_courseMode
-				);
+        Cursor cursor = _db.query( TABLE_NAME, columns, null, null, null, null, null, null );
 
-		return courseData;
-	}
+        if ( isValidCursor( cursor ) )
+        {
+            resultList = new ArrayList<CourseDataModel>();
+            int ii = 0;
+            while ( ii < cursor.getCount() )
+            {
+                cursor.moveToPosition( ii );
+                resultList.add( extractAllDataFromCursor( cursor ) );
+                ii++;
+            }
+        }
 
-	public String extractDataFromCursor( Cursor rowCursor, String[] columnsToExtract )
-	{
-		String retVal = "";
-		if ( isValidCursor( rowCursor ) && columnsToExtract.length > 0 )
-		{
-			int ii = 0;
-			while ( ii < columnsToExtract.length )
-			{
-				int colIndex = rowCursor.getColumnIndex( columnsToExtract[ii] );
+        return resultList;
+    }
+
+    public ArrayList<String> getAllCourseIds()
+    {
+        //_db = getWritableDatabase();
+
+        ArrayList<String> courseIdList = null;
+        Cursor cursor = _db.rawQuery( "SELECT " + _dbColNames.get( DBCols.COURSE_CODE ).name() + ", "
+                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " FROM " + TABLE_NAME , null );
+
+        if ( isValidCursor( cursor ) )
+        {
+            courseIdList = new ArrayList<String>();
+            String[] columnList = { _dbColNames.get( DBCols.COURSE_CODE ).name(), _dbColNames.get( DBCols.COURSE_NUMBER ).name() };
+            int ii = 0;
+            while ( ii < cursor.getCount() )
+            {
+                cursor.moveToPosition( ii );
+                courseIdList.add( extractDataFromCursor( cursor, columnList ) );
+                ii++;
+            }
+        }
+
+        return courseIdList;
+    }
+
+    public CourseDataModel extractAllDataFromCursor( Cursor rowCursor )
+    {
+        if ( !isValidCursor( rowCursor ) )
+        {
+            return null;
+        }
+
+        int db_courseNumber = rowCursor.getInt( _dbColNames.get( DBCols.COURSE_NUMBER ).index() );
+        CourseDataModel.CourseCode db_courseCode = CourseDataModel.CourseCode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_CODE ).index() ) );
+        int db_yearOffered = rowCursor.getInt( _dbColNames.get( DBCols.YEAR_OFFERED ).index() );
+        CourseDataModel.CourseSemester db_semesterOffered = CourseDataModel.CourseSemester.valueOf( rowCursor.getString( _dbColNames.get( DBCols.SEMESTER_OFFERED ).index() ) );
+        String db_instructorName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR ).index() );
+        CourseDataModel.CourseMode db_courseMode = CourseDataModel.CourseMode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_MODE ).index() ) );
+
+        CourseDataModel courseData = new CourseDataModel
+                (
+                        db_courseNumber,
+                        db_yearOffered,
+                        db_semesterOffered,
+                        db_courseCode,
+                        db_instructorName,
+                        db_courseMode
+                );
+
+        return courseData;
+    }
+
+    public String extractDataFromCursor( Cursor rowCursor, String[] columnsToExtract )
+    {
+        String retVal = "";
+        if ( isValidCursor( rowCursor ) && columnsToExtract.length > 0 )
+        {
+            int ii = 0;
+            while ( ii < columnsToExtract.length )
+            {
+                int colIndex = rowCursor.getColumnIndex( columnsToExtract[ii] );
 				/*
 				if ( rowCursor.getType( colIndex ) == Cursor.FIELD_TYPE_INTEGER )
 				{
@@ -293,32 +311,32 @@ public class CourseDataHandler extends SQLiteOpenHelper
 					retVal = rowCursor.getString( colIndex );
 				}
 				*/
-				retVal += rowCursor.getString( colIndex );
-				ii++;
-			}
-		}
+                retVal += rowCursor.getString( colIndex );
+                ii++;
+            }
+        }
 
-		return retVal;
-	}
+        return retVal;
+    }
 
-	private void debugPrintRowCursor( Cursor rowData )
-	{
-		if ( isValidCursor( rowData ) )
-		{
-			int ii = 0;
-			Log.d( LOG_TAG, "testRowCursor" );
-			while ( ii < rowData.getColumnCount() )
-			{
-				Log.d( "row " + ii + ": ", rowData.getString( ii ) );
-				ii++;
-			}
-		}
-	}
-
-	private boolean isValidCursor( Cursor cursor )
-	{
-		return ( cursor != null ) && ( cursor.getCount() > 0 ) && ( cursor.getColumnCount() > 0 );
-	}
+    private void debugPrintRowCursor( Cursor rowData )
+    {
+        if ( isValidCursor( rowData ) )
+        {
+            int ii = 0;
+            Log.d( LOG_TAG, "testRowCursor" );
+            while ( ii < rowData.getColumnCount() )
+            {
+                Log.d( "row " + ii + ": ", rowData.getString( ii ) );
+                ii++;
+            }
+        }
+    }
+//////
+    private boolean isValidCursor( Cursor cursor )
+    {
+        return ( cursor != null ) && ( cursor.getCount() > 0 ) && ( cursor.getColumnCount() > 0 );
+    }
 	/*
 	public boolean checkDataBaseExists()
 	{
