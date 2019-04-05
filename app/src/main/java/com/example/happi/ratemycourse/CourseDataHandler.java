@@ -16,10 +16,11 @@ public class CourseDataHandler extends SQLiteOpenHelper
 
     public enum DBCols
     {
+        COURSE_CODE,
+        COURSE_NUMBER,
+        COURSE_NAME,
         COURSE_MODE,
         SEMESTER_OFFERED,
-        COURSE_NUMBER,
-        COURSE_CODE,
         YEAR_OFFERED,
         INSTRUCTOR_LASTNAME,
         INSTRUCTOR_FIRSTNAME;
@@ -40,13 +41,14 @@ public class CourseDataHandler extends SQLiteOpenHelper
         _dbColNames = new EnumMap<DBCols, EnumHelper>( DBCols.class );
         int index = 0;
 
+        _dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ) );
+        _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
+        _dbColNames.put( DBCols.COURSE_NAME, new EnumHelper( "course_name", index++ ) );
         _dbColNames.put( DBCols.COURSE_MODE, new EnumHelper( "course_mode", index++ ) );
         _dbColNames.put( DBCols.SEMESTER_OFFERED, new EnumHelper( "semester_offered", index++ ) );
-        _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
-        _dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ) );
         _dbColNames.put( DBCols.YEAR_OFFERED, new EnumHelper( "year_offered", index++ ) );
-        _dbColNames.put( DBCols.INSTRUCTOR_LASTNAME, new EnumHelper( "instructor lastname", index++ ) );
-        _dbColNames.put( DBCols.INSTRUCTOR_FIRSTNAME, new EnumHelper( "instructor firstname", index++ ) );
+        _dbColNames.put( DBCols.INSTRUCTOR_LASTNAME, new EnumHelper( "instructor_lastname", index++ ) );
+        _dbColNames.put( DBCols.INSTRUCTOR_FIRSTNAME, new EnumHelper( "instructor_firstname", index++ ) );
         _db = getWritableDatabase();
         onCreate( _db );
     }
@@ -56,10 +58,11 @@ public class CourseDataHandler extends SQLiteOpenHelper
     public void onCreate( SQLiteDatabase db )
     {
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+                + _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_INT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_NAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.SEMESTER_OFFERED ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_INT + SEPARATOR_COMMA
-                + _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.YEAR_OFFERED ).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
@@ -82,11 +85,12 @@ public class CourseDataHandler extends SQLiteOpenHelper
         //_db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.getCourseMode().toString() );
-        values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.getCourseNumber() );
         values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.getCourseCode().toString() );
-        values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), course.getYearOffered() );
+        values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.getCourseNumber() );
+        values.put( _dbColNames.get( DBCols.COURSE_NAME).name(), course.getCourseName() );
+        values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.getCourseMode().toString() );
         values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), course.getSemesterOffered().toString() );
+        values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), course.getYearOffered() );
         values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), course.getInstructorLastName() );
         values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), course.getInstructorFirstName() );
 
@@ -96,13 +100,15 @@ public class CourseDataHandler extends SQLiteOpenHelper
     {
         //_db = getReadableDatabase();
         String[] columns = new String[_dbColNames.size()];
-        EnumHelper value = _dbColNames.get(DBCols.COURSE_MODE);
-        columns[value.index()] = value.name();
-        value = _dbColNames.get(DBCols.SEMESTER_OFFERED);
+        EnumHelper value = _dbColNames.get( DBCols.COURSE_CODE );
         columns[value.index()] = value.name();
         value = _dbColNames.get( DBCols.COURSE_NUMBER );
         columns[value.index()] = value.name();
-        value = _dbColNames.get( DBCols.COURSE_CODE );
+        value = _dbColNames.get( DBCols.COURSE_NAME );
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.COURSE_MODE);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.SEMESTER_OFFERED);
         columns[value.index()] = value.name();
         value = _dbColNames.get( DBCols.YEAR_OFFERED );
         columns[value.index()] = value.name();
@@ -159,9 +165,10 @@ public class CourseDataHandler extends SQLiteOpenHelper
 
         {
             ContentValues values = new ContentValues();
-            values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), courseData.getYearOffered() );
+            values.put( _dbColNames.get( DBCols.COURSE_NAME ).name(), courseData.getCourseName().toString() );
             values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), courseData.getCourseMode().toString() );
             values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), courseData.getSemesterOffered().toString() );
+            values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), courseData.getYearOffered() );
             values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), courseData.getInstructorLastName() );
             values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), courseData.getInstructorFirstName() );
 
@@ -254,20 +261,22 @@ public class CourseDataHandler extends SQLiteOpenHelper
             return null;
         }
 
-        int db_courseNumber = rowCursor.getInt( _dbColNames.get( DBCols.COURSE_NUMBER ).index() );
+        String db_courseName = rowCursor.getString( _dbColNames.get( DBCols.COURSE_CODE ).index() );
         CourseDataModel.CourseCode db_courseCode = CourseDataModel.CourseCode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_CODE ).index() ) );
-        int db_yearOffered = rowCursor.getInt( _dbColNames.get( DBCols.YEAR_OFFERED ).index() );
+        int db_courseNumber = rowCursor.getInt( _dbColNames.get( DBCols.COURSE_NUMBER ).index() );
+        CourseDataModel.CourseMode db_courseMode = CourseDataModel.CourseMode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_MODE ).index() ) );
         CourseDataModel.CourseSemester db_semesterOffered = CourseDataModel.CourseSemester.valueOf( rowCursor.getString( _dbColNames.get( DBCols.SEMESTER_OFFERED ).index() ) );
+        int db_yearOffered = rowCursor.getInt( _dbColNames.get( DBCols.YEAR_OFFERED ).index() );
         String db_instructorLastName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME).index() );
         String db_instructorFirstName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME).index() );
-        CourseDataModel.CourseMode db_courseMode = CourseDataModel.CourseMode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_MODE ).index() ) );
 
         CourseDataModel courseData = new CourseDataModel
                 (
+                        db_courseCode,
+                        db_courseNumber,
+                        db_courseName,
                         db_courseMode,
                         db_semesterOffered,
-                        db_courseNumber,
-                        db_courseCode,
                         db_yearOffered,
                         db_instructorLastName,
                         db_instructorFirstName
