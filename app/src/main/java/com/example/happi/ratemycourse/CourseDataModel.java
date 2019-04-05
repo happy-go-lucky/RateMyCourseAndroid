@@ -7,16 +7,23 @@ public class CourseDataModel {
 
 	public enum CourseCode {COMP, MATH, LIBS};
 
-	private CourseMode _courseMode;
-	private int _courseNumber;
-	private CourseCode _courseCode;
-	private int _yearOffered;
-	private String _instructorLastName;
-	private String _instructorFirstName;
-	private CourseSemester _semesterOffered;
+    private int _courseNumber;
+    private CourseCode _courseCode;
+    private CourseMode _courseMode;
+    private CourseSemester _semesterOffered;
+    private int _yearOffered;
+    private String _instructorLastName;
+    private String _instructorFirstName;
 
 
-	public CourseDataModel(CourseMode mode, int course_number, CourseCode courseCode, int year_offered, String instructor_lastname, String instructor_firstname) {
+	public CourseDataModel(CourseMode mode,
+                           CourseSemester semester,
+                           int course_number,
+                           CourseCode courseCode,
+                           int year_offered,
+                           String instructor_lastname,
+                           String instructor_firstname) {
+	    _semesterOffered = semester;
 		_courseMode = mode;
 		_courseNumber = course_number;
 		_courseCode = courseCode;
@@ -57,13 +64,13 @@ public class CourseDataModel {
 		_yearOffered = yearOffered;
 	}
 
-//    public CourseSemester getSemesterOffered() {
-//        return _semesterOffered;
-//    }
-//
-//    public void setSemesterOffered(CourseSemester value) {
-//        _semesterOffered = value;
-//    }
+    public CourseSemester getSemesterOffered() {
+        return _semesterOffered;
+    }
+
+    public void setSemesterOffered(CourseSemester value) {
+        _semesterOffered = value;
+    }
 
 	public String getInstructorLastName() {
 		return _instructorLastName;
@@ -80,7 +87,6 @@ public class CourseDataModel {
 	public void setInstructorFirstName(String instructorFirstName) {
 		_instructorFirstName = instructorFirstName;
 	}
-
 
 	@Override
 	public String toString() {
