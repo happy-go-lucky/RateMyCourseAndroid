@@ -158,7 +158,7 @@ public class MainPageFragment extends Fragment
                 "Dangus"
         );
 
-		_dataHandler.updateCourse( courseDataSent );
+		//_dataHandler.updateCourse( courseDataSent );
 
 		CourseDataModel courseDataReceived = _dataHandler.getCourse( CourseDataModel.CourseCode.COMP, 7082 );
 		if ( courseDataReceived != null )
