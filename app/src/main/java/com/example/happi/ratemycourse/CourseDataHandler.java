@@ -58,7 +58,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.SEMESTER_OFFERED ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_TEXT + SEPARATOR_COMMA // Make DATATYPE_INT?
                 + _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.YEAR_OFFERED ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
@@ -324,7 +324,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
     public static String getTableName() {
         return TABLE_NAME;
     }
-    
+
     /*
     public boolean checkDataBaseExists()
     {
