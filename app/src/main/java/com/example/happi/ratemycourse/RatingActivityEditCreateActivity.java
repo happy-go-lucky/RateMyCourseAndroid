@@ -34,8 +34,8 @@ public class RatingActivityEditCreateActivity extends AppCompatActivity {
         _readingSlider = findViewById(R.id.readingSlider);
         setupSeekbarListener(_readingSlider, (TextView)findViewById(R.id.readingScoreDisplay));
 
-        _usefullnessSlider = findViewById(R.id.usefullnessSlider);
-        setupSeekbarListener(_usefullnessSlider, (TextView)findViewById(R.id.usefullnessScoreDisplay));
+        _usefullnessSlider = findViewById(R.id.usefulnessSlider);
+        setupSeekbarListener(_usefullnessSlider, (TextView)findViewById(R.id.usefulnessScoreDisplay));
 
         _stressSlider = findViewById(R.id.stressSlider);
         setupSeekbarListener(_stressSlider, (TextView)findViewById(R.id.stressScoreDisplay));
