@@ -16,7 +16,7 @@ public class CommentsDataHandler extends SQLiteOpenHelper {
     public enum DBCols {
 
         COMMENT_ID,
-        COMMENTS
+        COMMENT
 
     }
 
@@ -36,7 +36,7 @@ public class CommentsDataHandler extends SQLiteOpenHelper {
         int index = 0;
 
         _dbColNames.put( DBCols.COMMENT_ID, new EnumHelper( "course_mode", index++ ) );
-        _dbColNames.put( DBCols.COMMENTS, new EnumHelper( "course_number", index++ ) );
+        _dbColNames.put( DBCols.COMMENT, new EnumHelper( "course_number", index++ ) );
 
 
         _db = getWritableDatabase();
@@ -48,12 +48,11 @@ public class CommentsDataHandler extends SQLiteOpenHelper {
     public void onCreate( SQLiteDatabase db )
     {
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-//                + _dbColNames.get( DBCols.COURSE_ID ).name() + DATATYPE_INT + SEPARATOR_COMMA
-                + _dbColNames.get( DBCols.COMMENTS ).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COMMENT_ID ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COMMENT ).name() + DATATYPE_INT + SEPARATOR_COMMA
 
                 + "PRIMARY KEY (" + _dbColNames.get( DBCols.COMMENT_ID ).name() + SEPARATOR_COMMA
-                + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + ")" + ")";
+                + _dbColNames.get( DBCols.COMMENT_ID ).name() + ")" + ")";
 
         db.execSQL( CREATE_COURSE_TABLE );
     }
