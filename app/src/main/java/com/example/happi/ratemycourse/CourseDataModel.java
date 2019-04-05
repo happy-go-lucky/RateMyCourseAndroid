@@ -7,18 +7,23 @@ public class CourseDataModel {
 
 	public enum CourseCode {COMP, MATH, LIBS};
 
-//	private int _courseid;
-	private CourseMode _courseMode;
-	private int _courseNumber;
-	private CourseCode _courseCode;
-	private int _yearOffered;
-	private String _instructorLastName;
-	private String _instructorFirstName;
-	private CourseSemester _semesterOffered;
+    private int _courseNumber;
+    private CourseCode _courseCode;
+    private CourseMode _courseMode;
+    private CourseSemester _semesterOffered;
+    private int _yearOffered;
+    private String _instructorLastName;
+    private String _instructorFirstName;
 
 
-	public CourseDataModel(CourseMode mode, int course_number, CourseCode courseCode, int year_offered, String instructor_lastname, String instructor_firstname) {
-//		_courseid = course_id;
+	public CourseDataModel(CourseMode mode,
+                           CourseSemester semester,
+                           int course_number,
+                           CourseCode courseCode,
+                           int year_offered,
+                           String instructor_lastname,
+                           String instructor_firstname) {
+	    _semesterOffered = semester;
 		_courseMode = mode;
 		_courseNumber = course_number;
 		_courseCode = courseCode;
@@ -26,14 +31,6 @@ public class CourseDataModel {
 		_instructorLastName = instructor_lastname;
 		_instructorFirstName = instructor_firstname;
 	}
-
-//	public int getCourseid() {
-//		return _courseid;
-//	}
-
-//	public void setCourseid(int course_id) {
-//		_courseNumber = course_id;
-//	}
 
 	public CourseMode getCourseMode() {
 		return _courseMode;
@@ -67,35 +64,33 @@ public class CourseDataModel {
 		_yearOffered = yearOffered;
 	}
 
-//    public CourseSemester getSemesterOffered() {
-//        return _semesterOffered;
-//    }
-//
-//    public void setSemesterOffered(CourseSemester value) {
-//        _semesterOffered = value;
-//    }
+    public CourseSemester getSemesterOffered() {
+        return _semesterOffered;
+    }
+
+    public void setSemesterOffered(CourseSemester value) {
+        _semesterOffered = value;
+    }
 
 	public String getInstructorLastName() {
 		return _instructorLastName;
 	}
 
-	public void set_InstructorLastName(String instructorLastName) {
+	public void setInstructorLastName(String instructorLastName) {
 		_instructorLastName = instructorLastName;
 	}
-
 
 	public String getInstructorFirstName() {
 		return _instructorFirstName;
 	}
 
-	public void set_InstructorFirstName(String instructorFirstName) {
+	public void setInstructorFirstName(String instructorFirstName) {
 		_instructorFirstName = instructorFirstName;
 	}
 
-
 	@Override
 	public String toString() {
-		return String.format("Course Mode: %s, Course Number: %s, Course Name: %s, Year: %s, Instructor Last Name: %s, Instructor First Name: %s\n",
-				_courseMode, _courseNumber, _courseCode, _yearOffered, _instructorLastName, _instructorFirstName);
+		return String.format("Course Mode: %s, Semester Offered: %s, Course Number: %s, Course Name: %s, Year: %s, Instructor Last Name: %s, Instructor First Name: %s\n",
+				_courseMode, _semesterOffered, _courseNumber, _courseCode, _yearOffered, _instructorLastName, _instructorFirstName);
 	}
 }
