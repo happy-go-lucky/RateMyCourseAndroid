@@ -13,10 +13,9 @@ public class CourseDataHandler extends SQLiteOpenHelper
     private static final String DB_NAME = "rate_my_course";
     private static final String TABLE_NAME = "course_data";
     private static final String LOG_TAG = "CourseDataHandler";
+
     public enum DBCols
     {
-
-//        COURSE_ID,
         COURSE_MODE,
         COURSE_NUMBER,
         COURSE_CODE,
@@ -24,11 +23,14 @@ public class CourseDataHandler extends SQLiteOpenHelper
         INSTRUCTOR_LASTNAME,
         INSTRUCTOR_FIRSTNAME;
     }
+
     private EnumMap<DBCols, EnumHelper> _dbColNames;
     private SQLiteDatabase _db;
+
     private static final String DATATYPE_INT = " INTEGER ";
     private static final String DATATYPE_TEXT = " TEXT ";
     private static final String SEPARATOR_COMMA = ",";
+
     public CourseDataHandler( Context context )
     {
         // build the DB
@@ -37,25 +39,21 @@ public class CourseDataHandler extends SQLiteOpenHelper
         _dbColNames = new EnumMap<DBCols, EnumHelper>( DBCols.class );
         int index = 0;
 
-
-//        _dbColNames.put( DBCols.COURSE_ID, new EnumHelper( "course_ID", index++ ) );
         _dbColNames.put( DBCols.COURSE_MODE, new EnumHelper( "course_mode", index++ ) );
         _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
         _dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ) );
         _dbColNames.put( DBCols.YEAR_OFFERED, new EnumHelper( "year_offered", index++ ) );
-//        _dbColNames.put( DBCols.SEMESTER_OFFERED, new EnumHelper( "semester_offered", index++ ) );
         _dbColNames.put( DBCols.INSTRUCTOR_LASTNAME, new EnumHelper( "instructor lastname", index++ ) );
-        //_dbColNames.put( DBCols.SEMESTER_OFFERED, new EnumHelper( "semester_offered", index++ ) );
         _dbColNames.put( DBCols.INSTRUCTOR_FIRSTNAME, new EnumHelper( "instructor firstname", index++ ) );
         _db = getWritableDatabase();
         onCreate( _db );
     }
+
     // if the DB exists already, this will not be called automatically
     @Override
     public void onCreate( SQLiteDatabase db )
     {
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-//                + _dbColNames.get( DBCols.COURSE_ID ).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
@@ -66,6 +64,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
                 + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + ")" + ")";
         db.execSQL( CREATE_COURSE_TABLE );
     }
+
     @Override
     public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion )
     {
@@ -74,12 +73,12 @@ public class CourseDataHandler extends SQLiteOpenHelper
         // Create tables again
         onCreate( db );
     }
+
     private void addCourse( CourseDataModel course )
     {
         //_db = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-//        values.put( _dbColNames.get( DBCols.COURSE_ID ).name(), course.getCourseid() );
         values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), course.getCourseMode().toString() );
         values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.getCourseNumber() );
         values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.getCourseCode().toString() );
@@ -96,8 +95,6 @@ public class CourseDataHandler extends SQLiteOpenHelper
         String[] columns = new String[_dbColNames.size()];
         EnumHelper value = _dbColNames.get( DBCols.COURSE_NUMBER );
 //        value = _dbColNames.get( DBCols.COURSE_NUMBER );
-//        columns[value.index()] = value.name();
-//        value = _dbColNames.get( DBCols.COURSE_ID );
 //        columns[value.index()] = value.name();
         value = _dbColNames.get( DBCols.COURSE_CODE );
         columns[value.index()] = value.name();
