@@ -46,7 +46,7 @@ public class UserDataHandler extends SQLiteOpenHelper
 		FIRST_NAME,
 		LAST_NAME,
 		SCHOOL_NAME
-	};
+	}
 
 	private EnumMap<DBCols, EnumHelper> _dbColNames;
 	private SQLiteDatabase _db;
