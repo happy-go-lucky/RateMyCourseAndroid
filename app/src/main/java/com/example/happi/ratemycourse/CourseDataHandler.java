@@ -17,6 +17,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
     public enum DBCols
     {
         COURSE_MODE,
+        SEMESTER_OFFERED,
         COURSE_NUMBER,
         COURSE_CODE,
         YEAR_OFFERED,
@@ -40,6 +41,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         int index = 0;
 
         _dbColNames.put( DBCols.COURSE_MODE, new EnumHelper( "course_mode", index++ ) );
+        _dbColNames.put( DBCols.SEMESTER_OFFERED, new EnumHelper( "semester_offered", index++ ) );
         _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ) );
         _dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ) );
         _dbColNames.put( DBCols.YEAR_OFFERED, new EnumHelper( "year_offered", index++ ) );
@@ -54,7 +56,8 @@ public class CourseDataHandler extends SQLiteOpenHelper
     public void onCreate( SQLiteDatabase db )
     {
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                + _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_INT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_MODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.SEMESTER_OFFERED ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COURSE_CODE ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.YEAR_OFFERED ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
@@ -83,19 +86,22 @@ public class CourseDataHandler extends SQLiteOpenHelper
         values.put( _dbColNames.get( DBCols.COURSE_NUMBER).name(), course.getCourseNumber() );
         values.put( _dbColNames.get( DBCols.COURSE_CODE ).name(), course.getCourseCode().toString() );
         values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), course.getYearOffered() );
-        //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), course.getSemesterOffered().toString() );
+        values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), course.getSemesterOffered().toString() );
         values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), course.getInstructorLastName() );
         values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), course.getInstructorFirstName() );
 
         _db.insert( TABLE_NAME, null, values );
     }
-    public CourseDataModel getCourse( CourseDataModel.CourseCode courseId, CourseDataModel.CourseCode courseCode , int courseNumber )
+    public CourseDataModel getCourse( CourseDataModel.CourseCode courseCode , int courseNumber )
     {
         //_db = getReadableDatabase();
         String[] columns = new String[_dbColNames.size()];
-        EnumHelper value = _dbColNames.get( DBCols.COURSE_NUMBER );
-//        value = _dbColNames.get( DBCols.COURSE_NUMBER );
-//        columns[value.index()] = value.name();
+        EnumHelper value = _dbColNames.get(DBCols.COURSE_MODE);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.SEMESTER_OFFERED);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get( DBCols.COURSE_NUMBER );
+        columns[value.index()] = value.name();
         value = _dbColNames.get( DBCols.COURSE_CODE );
         columns[value.index()] = value.name();
         value = _dbColNames.get( DBCols.YEAR_OFFERED );
@@ -104,64 +110,80 @@ public class CourseDataHandler extends SQLiteOpenHelper
         columns[value.index()] = value.name();
         value = _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME );
         columns[value.index()] = value.name();
+
         String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
                 + " = ? AND "
                 + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
+
         String[] whereArgs =
                 {
                         courseCode.toString(),
                         String.valueOf( courseNumber )
                 };
+
         Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
                 whereArgs, null, null, null, null );
+
         if ( isValidCursor( cursor ) )
         {
             cursor.moveToFirst();
         }
+
         return extractAllDataFromCursor( cursor );
     }
+
     public boolean isDuplicateData( CourseDataModel courseData )
     {
         //_db = getReadableDatabase();
         String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
                 + " = ? AND "
                 + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
+
         String[] whereArgs =
                 {
                         courseData.getCourseCode().toString(),
                         String.valueOf( courseData.getCourseNumber() )
                 };
+
         Cursor cursor = _db.rawQuery( "SELECT * FROM " + TABLE_NAME + " WHERE " + whereClause, whereArgs );
+
         boolean state = isValidCursor( cursor );
+
         return state;
     }
+
     public void updateCourse( CourseDataModel courseData )
     {
         //_db = getWritableDatabase();
         if ( isDuplicateData( courseData ) )
+
         {
             ContentValues values = new ContentValues();
             values.put( _dbColNames.get( DBCols.YEAR_OFFERED ).name(), courseData.getYearOffered() );
             values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(), courseData.getCourseMode().toString() );
-            //values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), courseData.getSemesterOffered().toString() );
+            values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(), courseData.getSemesterOffered().toString() );
             values.put( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME ).name(), courseData.getInstructorLastName() );
             values.put( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME ).name(), courseData.getInstructorFirstName() );
 
             String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
                     + " = ? AND "
                     + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " = ?";
+
             String[] whereArgs =
                     {
                             courseData.getCourseCode().toString(),
                             String.valueOf( courseData.getCourseNumber() )
                     };
+
             _db.update( TABLE_NAME, values, whereClause, whereArgs );
         }
+
         else
         {
             addCourse( courseData );
         }
     }
+
     public void dropTable( String tableName, boolean confirmation )
     {
         if ( confirmation )
@@ -171,16 +193,21 @@ public class CourseDataHandler extends SQLiteOpenHelper
             _db.close();
         }
     }
+
     public ArrayList<CourseDataModel> getAllEntries()
     {
         ArrayList<CourseDataModel> resultList = null;
+
         //_db = getWritableDatabase();
+
         String[] columns = new String[_dbColNames.size()];
         EnumHelper value = _dbColNames.get( DBCols.COURSE_NUMBER );
         columns[value.index()] = value.name();
         value = _dbColNames.get( DBCols.COURSE_CODE );
         columns[value.index()] = value.name();
+
         Cursor cursor = _db.query( TABLE_NAME, columns, null, null, null, null, null, null );
+
         if ( isValidCursor( cursor ) )
         {
             resultList = new ArrayList<CourseDataModel>();
@@ -192,14 +219,18 @@ public class CourseDataHandler extends SQLiteOpenHelper
                 ii++;
             }
         }
+
         return resultList;
     }
-    public ArrayList<String> getAllCourseIds()
+
+    public ArrayList<String> getAllCourseCodesAndNumbers()
     {
         //_db = getWritableDatabase();
         ArrayList<String> courseIdList = null;
+
         Cursor cursor = _db.rawQuery( "SELECT " + _dbColNames.get( DBCols.COURSE_CODE ).name() + ", "
                 + _dbColNames.get( DBCols.COURSE_NUMBER ).name() + " FROM " + TABLE_NAME , null );
+
         if ( isValidCursor( cursor ) )
         {
             courseIdList = new ArrayList<String>();
@@ -212,32 +243,39 @@ public class CourseDataHandler extends SQLiteOpenHelper
                 ii++;
             }
         }
+
         return courseIdList;
     }
+
     public CourseDataModel extractAllDataFromCursor( Cursor rowCursor )
     {
         if ( !isValidCursor( rowCursor ) )
         {
             return null;
         }
+
         int db_courseNumber = rowCursor.getInt( _dbColNames.get( DBCols.COURSE_NUMBER ).index() );
         CourseDataModel.CourseCode db_courseCode = CourseDataModel.CourseCode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_CODE ).index() ) );
         int db_yearOffered = rowCursor.getInt( _dbColNames.get( DBCols.YEAR_OFFERED ).index() );
-        //CourseDataModel.CourseSemester db_semesterOffered = CourseDataModel.CourseSemester.valueOf( rowCursor.getString( _dbColNames.get( DBCols.SEMESTER_OFFERED ).index() ) );
+        CourseDataModel.CourseSemester db_semesterOffered = CourseDataModel.CourseSemester.valueOf( rowCursor.getString( _dbColNames.get( DBCols.SEMESTER_OFFERED ).index() ) );
         String db_instructorLastName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR_LASTNAME).index() );
         String db_instructorFirstName = rowCursor.getString( _dbColNames.get( DBCols.INSTRUCTOR_FIRSTNAME).index() );
         CourseDataModel.CourseMode db_courseMode = CourseDataModel.CourseMode.valueOf( rowCursor.getString( _dbColNames.get( DBCols.COURSE_MODE ).index() ) );
+
         CourseDataModel courseData = new CourseDataModel
                 (
                         db_courseMode,
+                        db_semesterOffered,
                         db_courseNumber,
                         db_courseCode,
                         db_yearOffered,
                         db_instructorLastName,
                         db_instructorFirstName
                 );
+
         return courseData;
     }
+
     public String extractDataFromCursor( Cursor rowCursor, String[] columnsToExtract )
     {
         String retVal = "";
@@ -263,6 +301,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         }
         return retVal;
     }
+
     private void debugPrintRowCursor( Cursor rowData )
     {
         if ( isValidCursor( rowData ) )
@@ -276,13 +315,16 @@ public class CourseDataHandler extends SQLiteOpenHelper
             }
         }
     }
+
     private boolean isValidCursor( Cursor cursor )
     {
         return ( cursor != null ) && ( cursor.getCount() > 0 ) && ( cursor.getColumnCount() > 0 );
     }
+
     public static String getTableName() {
         return TABLE_NAME;
     }
+    
     /*
     public boolean checkDataBaseExists()
     {
