@@ -90,7 +90,7 @@ public class CourseDataModel {
 
 	@Override
 	public String toString() {
-		return String.format("Course Mode: %s, Course Number: %s, Course Name: %s, Year: %s, Instructor Last Name: %s, Instructor First Name: %s\n",
-				_courseMode, _courseNumber, _courseCode, _yearOffered, _instructorLastName, _instructorFirstName);
+		return String.format("Course Mode: %s, Semester Offered: %s, Course Number: %s, Course Name: %s, Year: %s, Instructor Last Name: %s, Instructor First Name: %s\n",
+				_courseMode, _semesterOffered, _courseNumber, _courseCode, _yearOffered, _instructorLastName, _instructorFirstName);
 	}
 }
