@@ -36,7 +36,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
     private static final String SEPARATOR_COMMA = ",";
     private static final String AUTO_INC = " AUTOINCREMENT ";
 
-
     public RatingDataHandler (Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
@@ -57,13 +56,14 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         onCreate(_db);
     }
 
+    //Is this how to add a foreign key? Add columns for course code and course number? -BH, Apr 4
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + _dbColNames.get(DBCols.RATING_ID).name() + DATATYPE_INT + SEPARATOR_COMMA
-                + _dbColNames.get(DBCols.COURSE_CODE).name()
-                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+                + _dbColNames.get(DBCols.COURSE_CODE).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get(DBCols.COURSE_NUMBER).name() + DATATYPE_TEXT + SEPARATOR_COMMA
                 + _dbColNames.get(DBCols.HOMEWORK_AMOUNT).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get(DBCols.READING_AMOUNT).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get(DBCols.USEFULNESS).name() + DATATYPE_INT + SEPARATOR_COMMA
