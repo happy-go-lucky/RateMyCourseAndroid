@@ -11,6 +11,13 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 
 //TODO: Complete getAverage... method
+
+/**
+ * Rating Data Handler.
+ *
+ * @author Brodie Heywood
+ * @version 1.0
+ */
 public class RatingDataHandler extends SQLiteOpenHelper {
 
     private static final int DB_VERSION = 1;
