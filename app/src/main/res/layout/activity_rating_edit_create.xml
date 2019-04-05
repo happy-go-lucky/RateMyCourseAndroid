@@ -25,7 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:text="Homework Score"
+        android:text="@string/homework_score_header"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
@@ -39,7 +39,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Reading Score"
+        android:text="@string/reading_score_header"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.26"
@@ -47,13 +47,13 @@
         app:layout_constraintTop_toBottomOf="@+id/homeworkSlider" />
 
     <TextView
-        android:id="@+id/usefullnessScoreLabel"
+        android:id="@+id/usefulnessScoreLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Usefullness Score"
+        android:text="@string/usefulness_score_header"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
@@ -67,12 +67,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Stress Score"
+        android:text="@string/stress_score_header"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usefullnessSlider" />
+        app:layout_constraintTop_toBottomOf="@+id/usefulnessSlider" />
 
     <SeekBar
         android:id="@+id/homeworkSlider"
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/readingScoreLabel" />
 
     <SeekBar
-        android:id="@+id/usefullnessSlider"
+        android:id="@+id/usefulnessSlider"
         android:layout_width="200dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
@@ -142,10 +142,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.358"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usefullnessScoreLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/usefulnessScoreLabel" />
 
     <TextView
-        android:id="@+id/usefullnessScoreDisplay"
+        android:id="@+id/usefulnessScoreDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -156,7 +156,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/readingSlider"
-        app:layout_constraintTop_toBottomOf="@+id/usefullnessScoreLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/usefulnessScoreLabel" />
 
     <SeekBar
         android:id="@+id/stressSlider"
