@@ -23,7 +23,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         SEMESTER_OFFERED,
         YEAR_OFFERED,
         INSTRUCTOR_LASTNAME,
-        INSTRUCTOR_FIRSTNAME;
+        INSTRUCTOR_FIRSTNAME
     }
 
     private EnumMap<DBCols, EnumHelper> _dbColNames;
@@ -194,7 +194,7 @@ public class CourseDataHandler extends SQLiteOpenHelper
         {
             ContentValues values = new ContentValues();
             values.put( _dbColNames.get( DBCols.COURSE_NAME ).name(),
-                    courseData.getCourseName().toString() );
+                    courseData.getCourseName() );
             values.put( _dbColNames.get( DBCols.COURSE_MODE ).name(),
                     courseData.getCourseMode().toString() );
             values.put( _dbColNames.get( DBCols.SEMESTER_OFFERED ).name(),

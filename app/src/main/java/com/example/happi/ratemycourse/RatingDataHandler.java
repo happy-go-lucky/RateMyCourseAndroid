@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-//TODO: Complete getAverage... method
+//TODO: Complete getAverage method?
 
 /**
  * Rating Data Handler.
@@ -190,7 +190,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return extractAllDataFromCursor(cursor);
     }
 
-    private ArrayList<String> getAllCourseRatings(
+    private ArrayList<String> getAllRatingsForCourse(
             CourseDataModel.CourseCode courseCode , int courseNumber) {
 
         String[] columns = new String[_dbColNames.size()];
@@ -237,7 +237,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return courseRatingsList;
     }
 
-    private ArrayList<String> getCourseRatings(CourseDataModel course) {
+    private ArrayList<String> getAllRatingsForCourse(CourseDataModel course) {
 
         ArrayList<String> courseRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
