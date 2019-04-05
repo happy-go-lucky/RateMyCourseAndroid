@@ -123,7 +123,7 @@ public class MainPageFragment extends Fragment
 
 	private void buildAutoCompleteList()
 	{
-		ArrayList<String> entries = _dataHandler.getAllCourseIds();
+		ArrayList<String> entries = _dataHandler.getAllCourseCodesAndNumbers();
 
 		if ( entries == null )
 		{
@@ -148,12 +148,14 @@ public class MainPageFragment extends Fragment
 	private void testDB()
 	{
 		CourseDataModel courseDataSent = new CourseDataModel(
-				7051,
-				2018,
-				CourseDataModel.CourseSemester.Fall,
-				CourseDataModel.CourseCode.COMP,
+				CourseDataModel.CourseMode.FT,
+                CourseDataModel.CourseSemester.Fall,
+                7051,
+                CourseDataModel.CourseCode.COMP,
+                2018,
 				"Borna",
-				CourseDataModel.CourseMode.FT );
+                "Dangus"
+        );
 
 		_dataHandler.updateCourse( courseDataSent );
 
