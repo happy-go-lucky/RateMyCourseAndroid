@@ -1,13 +1,14 @@
 package com.example.happi.ratemycourse;
 
 /**
- * Rating Database Model
+ * Rating Database Model.
  *
  * @author Brodie Heywood
  * @version 0.1
  */
 public class RatingDataModel {
 
+    // Tracks number of ratings, for setting unique rating ID to each instance
     private static int numberOfRatings = 0;
 
     // Rating metrics
@@ -16,15 +17,18 @@ public class RatingDataModel {
     private int _usefulness;
     private int _stress;
 
+    // Unique rating ID for each instance
     private int _ratingID;
 
     /**
-     * RatingDataModel Constructor
+     * RatingDataModel object constructor.
      *
-     * @param homework user-inputted amount of homework on 10 point scale
-     * @param reading amount of reading required from course on 10 point scale
-     * @param usefulness usefulness of course on 10 point scale
-     * @param stress stressfulness of course on 10 point scale
+     * All parameters are a rating, scored on a range of 0 to 10.
+     *
+     * @param homework amount of homework assigned
+     * @param reading amount of reading required
+     * @param usefulness usefulness of course content for future career
+     * @param stress stressfulness of course
      */
     public RatingDataModel(int homework,
                            int reading,
