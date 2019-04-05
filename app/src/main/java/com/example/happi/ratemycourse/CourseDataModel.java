@@ -7,7 +7,6 @@ public class CourseDataModel {
 
 	public enum CourseCode {COMP, MATH, LIBS};
 
-//	private int _courseid;
 	private CourseMode _courseMode;
 	private int _courseNumber;
 	private CourseCode _courseCode;
@@ -18,7 +17,6 @@ public class CourseDataModel {
 
 
 	public CourseDataModel(CourseMode mode, int course_number, CourseCode courseCode, int year_offered, String instructor_lastname, String instructor_firstname) {
-//		_courseid = course_id;
 		_courseMode = mode;
 		_courseNumber = course_number;
 		_courseCode = courseCode;
@@ -26,14 +24,6 @@ public class CourseDataModel {
 		_instructorLastName = instructor_lastname;
 		_instructorFirstName = instructor_firstname;
 	}
-
-//	public int getCourseid() {
-//		return _courseid;
-//	}
-
-//	public void setCourseid(int course_id) {
-//		_courseNumber = course_id;
-//	}
 
 	public CourseMode getCourseMode() {
 		return _courseMode;
@@ -79,16 +69,15 @@ public class CourseDataModel {
 		return _instructorLastName;
 	}
 
-	public void set_InstructorLastName(String instructorLastName) {
+	public void setInstructorLastName(String instructorLastName) {
 		_instructorLastName = instructorLastName;
 	}
-
 
 	public String getInstructorFirstName() {
 		return _instructorFirstName;
 	}
 
-	public void set_InstructorFirstName(String instructorFirstName) {
+	public void setInstructorFirstName(String instructorFirstName) {
 		_instructorFirstName = instructorFirstName;
 	}
 
