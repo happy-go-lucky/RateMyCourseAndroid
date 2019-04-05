@@ -48,8 +48,8 @@ public class CommentsDataHandler extends SQLiteOpenHelper {
     public void onCreate( SQLiteDatabase db )
     {
         String CREATE_COURSE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                + _dbColNames.get( DBCols.COMMENT_ID ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-                + _dbColNames.get( DBCols.COMMENT ).name() + DATATYPE_INT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COMMENT_ID ).name() + DATATYPE_INT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COMMENT ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
 
                 + "PRIMARY KEY (" + _dbColNames.get( DBCols.COMMENT_ID ).name() + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COMMENT_ID ).name() + ")" + ")";
