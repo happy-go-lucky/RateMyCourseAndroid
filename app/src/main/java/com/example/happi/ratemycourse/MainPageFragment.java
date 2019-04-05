@@ -2,8 +2,11 @@ package com.example.happi.ratemycourse;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,8 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -25,6 +31,7 @@ import java.util.List;
  */
 public class MainPageFragment extends Fragment
 {
+
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -68,10 +75,9 @@ public class MainPageFragment extends Fragment
 	public void onCreate( Bundle savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
-		if ( getArguments() != null )
-		{
-			mParam1 = getArguments().getString( ARG_PARAM1 );
-			mParam2 = getArguments().getString( ARG_PARAM2 );
+		if ( getArguments() != null ) {
+			mParam1 = getArguments().getString(ARG_PARAM1);
+			mParam2 = getArguments().getString(ARG_PARAM2);
 		}
 	}
 
@@ -104,45 +110,40 @@ public class MainPageFragment extends Fragment
 
 
 		_view = getView();
-		initScreenElements();
 		initDatabase();
 		testDB();
-		buildAutoCompleteList();
+		initScreenElements();
 	}
 
-	private void initScreenElements()
+	public void initScreenElements()
 	{
 		_searchTextView = _view.findViewById( R.id.autoCompleteTextView );
-		//_searchTextView.setOnItemClickListener(  );
+
+		_searchTextView.setThreshold(2);
+
+		ArrayList<String> entries = _dataHandler.getAllCourseCodesAndNumbers();
+
+		if (entries == null) {
+			Log.e("COURSE LIST ENTRIES", "Failed to fetch course listing");
+			return;
+		}
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, entries);
+		_searchTextView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+
+		_searchTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(getContext(), CourseRatingActivity.class);
+				intent.putExtra("COURSE_NAME", parent.getItemAtPosition(position).toString());
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void initDatabase()
 	{
 		_dataHandler = new CourseDataHandler( getContext() );
-	}
-
-	private void buildAutoCompleteList()
-	{
-		ArrayList<String> entries = _dataHandler.getAllCourseCodesAndNumbers();
-
-		if ( entries == null )
-		{
-			return;
-		}
-		else
-		{
-			int ii = 0;
-			Log.d( LOG_TAG, "Entries in DB:" );
-			while ( ii < entries.size() )
-			{
-				Log.d( "entry" + ii, entries.get( ii ) );
-				ii++;
-			}
-
-			ArrayAdapter<String> searchAdapter = new ArrayAdapter<String>( getContext(), R.layout.fragment_main_page, R.id.autoCompleteTextView, entries );
-
-			_searchTextView.setAdapter( searchAdapter );
-		}
 	}
 
 	private void testDB()
