@@ -295,4 +295,8 @@ public class UserDataHandler extends SQLiteOpenHelper
 	{
 		return ( cursor != null ) && ( cursor.getCount() > 0 ) && ( cursor.getColumnCount() > 0 );
 	}
+
+	public static String getTableName() {
+		return TABLE_NAME;
+	}
 }
