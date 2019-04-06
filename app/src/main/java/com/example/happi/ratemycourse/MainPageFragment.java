@@ -1,27 +1,22 @@
 package com.example.happi.ratemycourse;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
+
+import com.example.happi.ratemycourse.database.CourseDataHandler;
+import com.example.happi.ratemycourse.database.CourseDataModel;
 
 import java.util.ArrayList;
-
-import java.util.List;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.example.happi.ratemycourse;
+package com.example.happi.ratemycourse.database;
 
 /**
  * Rating Database Model.
