@@ -149,16 +149,17 @@ public class MainPageFragment extends Fragment
 	private void testDB()
 	{
 		CourseDataModel courseDataSent = new CourseDataModel(
+				CourseDataModel.CourseCode.COMP,
+				8051,
+				"Advanced game development",
 				CourseDataModel.CourseMode.FT,
-                CourseDataModel.CourseSemester.Fall,
-                7051,
-                CourseDataModel.CourseCode.COMP,
-                2018,
-				"Borna",
-                "Dangus"
-        );
+				CourseDataModel.CourseSemester.Winter,
+				2019,
+				"Noureddin",
+				"Bourna"
+				);
 
-		//_dataHandler.updateCourse( courseDataSent );
+		_dataHandler.updateCourse( courseDataSent );
 
 		CourseDataModel courseDataReceived = _dataHandler.getCourse( CourseDataModel.CourseCode.COMP, 7082 );
 		if ( courseDataReceived != null )
