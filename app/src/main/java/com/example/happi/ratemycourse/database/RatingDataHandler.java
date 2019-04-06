@@ -1,4 +1,4 @@
-package com.example.happi.ratemycourse;
+package com.example.happi.ratemycourse.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
+
+import com.example.happi.ratemycourse.util.EnumHelper;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

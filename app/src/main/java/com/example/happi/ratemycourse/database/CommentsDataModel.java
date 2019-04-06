@@ -1,4 +1,4 @@
-package com.example.happi.ratemycourse;
+package com.example.happi.ratemycourse.database;
 
 //import android.util.Log;
 
