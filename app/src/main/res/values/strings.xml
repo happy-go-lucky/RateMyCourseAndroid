@@ -25,4 +25,8 @@
     <string name="reading_score_header">Reading Score</string>
     <string name="stress_score_header">Stress Score</string>
     <string name="average_score_header">Average Score</string>
+    <string name="first_name_label">First Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="id_label">ID</string>
+    <string name="register_label">Register</string>
 </resources>
