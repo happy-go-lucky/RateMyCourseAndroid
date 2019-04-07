@@ -18,6 +18,9 @@ public class CommentsDataHandler extends SQLiteOpenHelper {
     public enum DBCols {
 
         COMMENT_ID,
+        USER_ID,
+        COURSE_CODE,
+        COURSE_NUMBER,
         COMMENT
 
     }
@@ -37,9 +40,11 @@ public class CommentsDataHandler extends SQLiteOpenHelper {
         _dbColNames = new EnumMap<DBCols, EnumHelper>(DBCols.class);
         int index = 0;
 
-        _dbColNames.put( DBCols.COMMENT_ID, new EnumHelper( "course_mode", index++ ) );
-        _dbColNames.put( DBCols.COMMENT, new EnumHelper( "course_number", index++ ) );
-
+        _dbColNames.put( DBCols.COMMENT_ID, new EnumHelper( "comment_id", index++ ));
+        _dbColNames.put( DBCols.USER_ID, new EnumHelper("user_id", index++));
+        _dbColNames.put( DBCols.COURSE_CODE, new EnumHelper( "course_code", index++ ));
+        _dbColNames.put( DBCols.COURSE_NUMBER, new EnumHelper( "course_number", index++ ));
+        _dbColNames.put( DBCols.COMMENT, new EnumHelper( "comment", index++ ));
 
         _db = getWritableDatabase();
         onCreate( _db );
@@ -51,10 +56,21 @@ public class CommentsDataHandler extends SQLiteOpenHelper {
     {
         String CREATE_COMMENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + _dbColNames.get( DBCols.COMMENT_ID ).name() + DATATYPE_INT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.USER_ID).name() + DATATYPE_INT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_CODE).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+                + _dbColNames.get( DBCols.COURSE_NUMBER).name() + DATATYPE_INT + SEPARATOR_COMMA
                 + _dbColNames.get( DBCols.COMMENT ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
 
-                + "PRIMARY KEY (" + _dbColNames.get( DBCols.COMMENT_ID ).name() + SEPARATOR_COMMA
-                + _dbColNames.get( DBCols.COMMENT_ID ).name() + ")" + ")";
+                + "PRIMARY KEY (" + _dbColNames.get( DBCols.COMMENT_ID ).name() + SEPARATOR_COMMA + _dbColNames.get( DBCols.COMMENT_ID ).name() + ")" + SEPARATOR_COMMA
+
+                + "FOREIGN KEY (" + _dbColNames.get( DBCols.COURSE_CODE ).name() + SEPARATOR_COMMA + _dbColNames.get( DBCols.COURSE_NUMBER).name() + ")"
+                + "REFERENCES " + CourseDataHandler.getTableName() + "(" + _dbColNames.get( DBCols.COURSE_CODE ).name() + SEPARATOR_COMMA + _dbColNames.get( DBCols.COURSE_NUMBER).name() + ")" + SEPARATOR_COMMA
+
+                + "FOREIGN KEY (" + _dbColNames.get( DBCols.USER_ID ).name() + ")"
+                + "REFERENCES " + UserDataHandler.getTableName() + "(" + _dbColNames.get( DBCols.USER_ID ).name() + ")" + SEPARATOR_COMMA
+
+
+                + ")";
 
         db.execSQL( CREATE_COMMENTS_TABLE );
     }

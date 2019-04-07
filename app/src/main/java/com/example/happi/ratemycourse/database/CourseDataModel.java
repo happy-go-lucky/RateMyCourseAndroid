@@ -5,7 +5,7 @@ public class CourseDataModel {
 
 	public enum CourseSemester {Winter, Summer, Fall};
 
-	public enum CourseCode {COMP, MATH, LIBS};
+	public static enum CourseCode {COMP, MATH, LIBS};
 
     private CourseCode _courseCode;
     private int _courseNumber;

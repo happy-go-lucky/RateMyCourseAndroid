@@ -33,6 +33,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         RATING_ID,
         COURSE_CODE,
         COURSE_NUMBER,
+        USER_ID,
         HOMEWORK_AMOUNT,
         READING_AMOUNT,
         USEFULNESS,
@@ -52,6 +53,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 new EnumHelper("course_code", index++));
         _dbColNames.put(DBCols.COURSE_NUMBER,
                 new EnumHelper("course_number", index++));
+        _dbColNames.put(DBCols.USER_ID,
+                new EnumHelper("user_id", index++));
         _dbColNames.put(DBCols.HOMEWORK_AMOUNT,
                 new EnumHelper("homework_amount", index++));
         _dbColNames.put(DBCols.READING_AMOUNT,
@@ -83,14 +86,29 @@ public class RatingDataHandler extends SQLiteOpenHelper {
 
                 + _dbColNames.get(DBCols.RATING_ID).name()
                 + DATATYPE_INT
+                + " PRIMARY KEY "
+                + SEPARATOR_COMMA
+
+                + _dbColNames.get(DBCols.USER_ID).name()
+                + DATATYPE_INT
                 + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.COURSE_CODE).name()
                 + DATATYPE_TEXT
+                + "REFERENCES "
+                + CourseDataHandler.getTableName()
+                + "("
+                + _dbColNames.get(DBCols.COURSE_CODE).name()
+                + ")"
                 + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.COURSE_NUMBER).name()
                 + DATATYPE_INT
+                + "REFERENCES "
+                + CourseDataHandler.getTableName()
+                + "("
+                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+                + ")"
                 + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.HOMEWORK_AMOUNT).name()
@@ -107,23 +125,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
 
                 + _dbColNames.get(DBCols.STRESS_LEVEL).name()
                 + DATATYPE_INT
-                + SEPARATOR_COMMA
-
-                + " PRIMARY KEY ("
-                + _dbColNames.get(DBCols.RATING_ID).name()
-                + ")"
-                + SEPARATOR_COMMA
-
-                + " FOREIGN KEY ("
-                + _dbColNames.get(DBCols.COURSE_CODE).name()
-                + SEPARATOR_COMMA
-                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-                + ")"
-                + " REFERENCES "
-                + CourseDataHandler.getTableName() + "("
-                + _dbColNames.get(DBCols.COURSE_CODE).name()
-                + SEPARATOR_COMMA
-                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
                 + ")";
 
         db.execSQL(CREATE_COURSE_TABLE);
@@ -135,8 +136,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    private void addRating(RatingDataModel rating,
-                           CourseDataModel course) {
+    public void addRating(RatingDataModel rating,
+                           CourseDataModel course, UserDataModel user) {
 
         ContentValues values = new ContentValues();
 
@@ -146,6 +147,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 course.getCourseCode().toString());
         values.put(_dbColNames.get(DBCols.COURSE_NUMBER).name(),
                 course.getCourseNumber());
+        values.put(_dbColNames.get(DBCols.USER_ID).name(),
+                user.getUserId());
         values.put(_dbColNames.get(DBCols.HOMEWORK_AMOUNT).name(),
                 rating.getHomework());
         values.put(_dbColNames.get(DBCols.READING_AMOUNT).name(),
@@ -158,7 +161,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         _db.insert(TABLE_NAME, null, values);
     }
 
-    private RatingDataModel getRating(int ratingID) {
+    public RatingDataModel getRating(int ratingID) {
 
         String[] columns = new String[_dbColNames.size()];
 
@@ -167,6 +170,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.COURSE_CODE);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -192,7 +197,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return extractAllDataFromCursor(cursor);
     }
 
-    private ArrayList<String> getAllRatingsForCourse(
+    public ArrayList<RatingDataModel> getAllRatingsForCourse(
             CourseDataModel.CourseCode courseCode , int courseNumber) {
 
         String[] columns = new String[_dbColNames.size()];
@@ -202,6 +207,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.COURSE_CODE);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -222,26 +229,27 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                         String.valueOf(courseNumber)
                 };
 
-        Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
-                whereArgs, null, null, null, null );
-        ArrayList<String> courseRatingsList = null;
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
+
+        ArrayList<RatingDataModel> resultList = new ArrayList<>();
 
         if (isValidCursor(cursor)) {
-            courseRatingsList = new ArrayList<>();
+            resultList = new ArrayList<>();
             int ii = 0;
             while (ii < cursor.getCount()) {
                 cursor.moveToPosition(ii);
-                courseRatingsList.add(extractDataFromCursor(cursor, columns));
+                resultList.add(extractAllDataFromCursor(cursor));
                 ii++;
             }
         }
 
-        return courseRatingsList;
+        return resultList;
     }
 
-    private ArrayList<String> getAllRatingsForCourse(CourseDataModel course) {
+    // This function may be unnecessary (can use course accessors in main code)
+    public ArrayList<RatingDataModel> getAllRatingsForCourse(CourseDataModel course) {
 
-        ArrayList<String> courseRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
 
         EnumHelper value = _dbColNames.get(DBCols.RATING_ID);
@@ -249,6 +257,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.COURSE_CODE);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -259,9 +269,9 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.STRESS_LEVEL);
         columns[value.index()] = value.name();
 
-        String whereClause = _dbColNames.get( DBCols.COURSE_CODE ).name()
+        String whereClause = _dbColNames.get(DBCols.COURSE_CODE).name()
                 + " = ? AND "
-                + _dbColNames.get( DBCols.COURSE_NUMBER ).name()
+                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
                 + " = ?";
 
         String[] whereArgs =
@@ -270,23 +280,121 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                         String.valueOf(course.getCourseNumber())
                 };
 
-        Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
-                whereArgs, null, null, null, null );
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
+
+        ArrayList<RatingDataModel> resultList = new ArrayList<>();
 
         if (isValidCursor(cursor)) {
-            courseRatingsList = new ArrayList<>();
+            resultList = new ArrayList<>();
             int ii = 0;
             while (ii < cursor.getCount()) {
                 cursor.moveToPosition(ii);
-                courseRatingsList.add(extractDataFromCursor(cursor, columns));
+                resultList.add(extractAllDataFromCursor(cursor));
                 ii++;
             }
         }
 
-        return courseRatingsList;
+        return resultList;
     }
 
-    private int getAverageForEachCriteria(
+    public ArrayList<RatingDataModel> getAllRatingsByUser(String userID) {
+
+        String[] columns = new String[_dbColNames.size()];
+
+        EnumHelper value = _dbColNames.get(DBCols.RATING_ID);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.COURSE_CODE);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.READING_AMOUNT);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USEFULNESS);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.STRESS_LEVEL);
+        columns[value.index()] = value.name();
+
+        String whereClause = _dbColNames.get(DBCols.USER_ID).name()
+                + " = ?";
+
+        String[] whereArgs =
+                {
+                        String.valueOf(userID)
+                };
+
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
+
+        ArrayList<RatingDataModel> resultList = new ArrayList<>();
+
+        if (isValidCursor(cursor)) {
+            resultList = new ArrayList<>();
+            int ii = 0;
+            while (ii < cursor.getCount()) {
+                cursor.moveToPosition(ii);
+                resultList.add(extractAllDataFromCursor(cursor));
+                ii++;
+            }
+        }
+
+        return resultList;
+    }
+
+    public RatingDataModel getCourseRatingByUser(String userID,
+                                                    CourseDataModel.CourseCode courseCode,
+                                                    int courseNumber) {
+
+        String[] columns = new String[_dbColNames.size()];
+
+        EnumHelper value = _dbColNames.get(DBCols.RATING_ID);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.COURSE_CODE);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.READING_AMOUNT);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USEFULNESS);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.STRESS_LEVEL);
+        columns[value.index()] = value.name();
+
+        String whereClause = _dbColNames.get(DBCols.COURSE_CODE).name()
+                + " = ? AND "
+                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+                + " = ? AND "
+                + _dbColNames.get(DBCols.USER_ID).name()
+                + " = ?";
+
+        String[] whereArgs =
+                {
+                        courseCode.toString(),
+                        String.valueOf(courseNumber),
+                        String.valueOf(userID)
+                };
+
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
+
+        if (isValidCursor(cursor)) {
+            cursor.moveToFirst();
+        }
+
+        return extractAllDataFromCursor(cursor);
+    }
+
+    //get user rating for course
+
+    public int getAverageForEachCriteria(
             CourseDataModel.CourseCode courseCode, int courseNumber) {
         return 0;
     }
@@ -373,4 +481,9 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return (cursor != null)
                 && (cursor.getCount() > 0) && (cursor.getColumnCount() > 0);
     }
+
+    public static String getTableName() {
+        return TABLE_NAME;
+    }
 }
+
