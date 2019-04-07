@@ -33,6 +33,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         RATING_ID,
         COURSE_CODE,
         COURSE_NUMBER,
+        USER_ID,
         HOMEWORK_AMOUNT,
         READING_AMOUNT,
         USEFULNESS,
@@ -52,6 +53,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 new EnumHelper("course_code", index++));
         _dbColNames.put(DBCols.COURSE_NUMBER,
                 new EnumHelper("course_number", index++));
+        _dbColNames.put(DBCols.USER_ID,
+                new EnumHelper("rating_id", index++));
         _dbColNames.put(DBCols.HOMEWORK_AMOUNT,
                 new EnumHelper("homework_amount", index++));
         _dbColNames.put(DBCols.READING_AMOUNT,
@@ -93,6 +96,10 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 + DATATYPE_INT
                 + SEPARATOR_COMMA
 
+                + _dbColNames.get(DBCols.USER_ID).name()
+                + DATATYPE_INT
+                + SEPARATOR_COMMA
+
                 + _dbColNames.get(DBCols.HOMEWORK_AMOUNT).name()
                 + DATATYPE_INT
                 + SEPARATOR_COMMA
@@ -124,6 +131,14 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 + _dbColNames.get(DBCols.COURSE_CODE).name()
                 + SEPARATOR_COMMA
                 + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+                + ")"
+
+                + " FOREIGN KEY ("
+                + _dbColNames.get(DBCols.USER_ID).name()
+                + ")"
+                + " REFERENCES "
+                + UserDataHandler.getTableName() + "("
+                + _dbColNames.get(DBCols.USER_ID).name()
                 + ")";
 
         db.execSQL(CREATE_COURSE_TABLE);
@@ -146,6 +161,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 course.getCourseCode().toString());
         values.put(_dbColNames.get(DBCols.COURSE_NUMBER).name(),
                 course.getCourseNumber());
+        values.put(_dbColNames.get(DBCols.USER_ID).name(),
+                course.getCourseNumber());
         values.put(_dbColNames.get(DBCols.HOMEWORK_AMOUNT).name(),
                 rating.getHomework());
         values.put(_dbColNames.get(DBCols.READING_AMOUNT).name(),
@@ -167,6 +184,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.COURSE_CODE);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -202,6 +221,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.COURSE_CODE);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -249,6 +270,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.COURSE_CODE);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
+        columns[value.index()] = value.name();
+        value = _dbColNames.get(DBCols.USER_ID);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -373,4 +396,9 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return (cursor != null)
                 && (cursor.getCount() > 0) && (cursor.getColumnCount() > 0);
     }
+
+    public static String getTableName() {
+        return TABLE_NAME;
+    }
 }
+
