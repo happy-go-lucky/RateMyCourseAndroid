@@ -177,13 +177,30 @@ public class MainPageFragment extends Fragment
         );
         _userDataHandler.updateUser( userDataSent );
 
+		UserDataModel userDataSent2 = new UserDataModel(
+				"A12653654",
+				"xxUsernameXX",
+				"stillusinghotmail@yahoo.com",
+				password,
+				"Kirk",
+				"Land",
+				"BCIT"
+		);
+		_userDataHandler.updateUser( userDataSent2 );
+
+
         // Add Rating Data
 		RatingDataModel ratingDataSent = new RatingDataModel(5, 4, 3, 7);
 		_ratingDataHandler.addRating(ratingDataSent, courseDataSent, userDataSent);
 
+		RatingDataModel ratingDataSent2 = new RatingDataModel(3, 6, 1, 1);
+		_ratingDataHandler.addRating(ratingDataSent2, courseDataSent, userDataSent2);
+
 		// try to get it back
 		CourseDataModel courseDataReceived = _courseDataHandler.getCourse( CourseDataModel.CourseCode.COMP, 8051 );
-		RatingDataModel ratingDataRecieved = _ratingDataHandler.getAllRatingsForCourse(courseDataReceived);
+		ArrayList<RatingDataModel> ratingDataRecieved = _ratingDataHandler.getAllRatingsForCourse(courseDataReceived);
+
+		RatingDataModel ratingDataRecievedSingle = _ratingDataHandler.getCourseRatingByUser("A12653654", CourseDataModel.CourseCode.COMP, 8051);
 
 	}
 }
