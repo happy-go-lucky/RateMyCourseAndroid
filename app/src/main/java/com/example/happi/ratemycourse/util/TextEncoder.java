@@ -9,6 +9,8 @@ public class TextEncoder
 {
 	private final String LOG_TAG = "TextEncoder";
 
+	private final String ENCRYPTION_ALGORITHM = "MD5";
+
 	private MessageDigest _mdCode;
 
 	public TextEncoder( String algorithm )
@@ -16,6 +18,17 @@ public class TextEncoder
 		try
 		{
 			_mdCode = MessageDigest.getInstance( algorithm );
+		}
+		catch( NoSuchAlgorithmException e )
+		{
+			Log.d( LOG_TAG, "please enter a valid algorithm to encrypt" );
+		}
+	}
+
+	public TextEncoder() {
+		try
+		{
+			_mdCode = MessageDigest.getInstance( ENCRYPTION_ALGORITHM );
 		}
 		catch( NoSuchAlgorithmException e )
 		{

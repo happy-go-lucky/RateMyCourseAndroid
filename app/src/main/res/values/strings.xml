@@ -36,4 +36,9 @@
     <string name="courseMessageTitle">Message.</string>
     <string name="courseAddSuccess">Course Added successfully.</string>
     <string name="courseAddFail">Unable to add new Course.</string>
+
+    <string name="first_name_label">First Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="id_label">ID</string>
+    <string name="register_label">Register</string>
 </resources>
