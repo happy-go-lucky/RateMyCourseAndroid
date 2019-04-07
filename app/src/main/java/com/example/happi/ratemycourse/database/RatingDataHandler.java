@@ -54,7 +54,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         _dbColNames.put(DBCols.COURSE_NUMBER,
                 new EnumHelper("course_number", index++));
         _dbColNames.put(DBCols.USER_ID,
-                new EnumHelper("rating_id", index++));
+                new EnumHelper("user_id", index++));
         _dbColNames.put(DBCols.HOMEWORK_AMOUNT,
                 new EnumHelper("homework_amount", index++));
         _dbColNames.put(DBCols.READING_AMOUNT,
@@ -86,18 +86,29 @@ public class RatingDataHandler extends SQLiteOpenHelper {
 
                 + _dbColNames.get(DBCols.RATING_ID).name()
                 + DATATYPE_INT
+                + " PRIMARY KEY "
                 + SEPARATOR_COMMA
-
-//                + _dbColNames.get(DBCols.COURSE_CODE).name()
-//                + DATATYPE_TEXT
-//                + SEPARATOR_COMMA
-//
-//                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-//                + DATATYPE_INT
-//                + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.USER_ID).name()
                 + DATATYPE_INT
+                + SEPARATOR_COMMA
+
+                + _dbColNames.get(DBCols.COURSE_CODE).name()
+                + DATATYPE_TEXT
+                + "REFERENCES "
+                + CourseDataHandler.getTableName()
+                + "("
+                + _dbColNames.get(DBCols.COURSE_CODE).name()
+                + ")"
+                + SEPARATOR_COMMA
+
+                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+                + DATATYPE_INT
+                + "REFERENCES "
+                + CourseDataHandler.getTableName()
+                + "("
+                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+                + ")"
                 + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.HOMEWORK_AMOUNT).name()
@@ -114,48 +125,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
 
                 + _dbColNames.get(DBCols.STRESS_LEVEL).name()
                 + DATATYPE_INT
-                + SEPARATOR_COMMA
-
-                + " PRIMARY KEY ("
-                + _dbColNames.get(DBCols.RATING_ID).name()
-                + ")"
-                + SEPARATOR_COMMA
-
-                + " ("
-                + _dbColNames.get(DBCols.COURSE_CODE).name()
-                + SEPARATOR_COMMA
-                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-                + ") "
-                + DATATYPE_INT
-                + " REFERENCES "
-                + CourseDataHandler.getTableName()
-                + SEPARATOR_COMMA
-
-                + _dbColNames.get(DBCols.USER_ID).name()
-                + DATATYPE_INT
-                + " REFERENCES "
-                + CourseDataHandler.getTableName()
                 + ")";
-
-//                + " FOREIGN KEY ("
-//                + _dbColNames.get(DBCols.COURSE_CODE).name()
-//                + SEPARATOR_COMMA
-//                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-//                + ")"
-//                + " REFERENCES "
-//                + CourseDataHandler.getTableName() + "("
-//                + _dbColNames.get(DBCols.COURSE_CODE).name()
-//                + SEPARATOR_COMMA
-//                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-//                + ")"
-//
-//                + " FOREIGN KEY ("
-//                + _dbColNames.get(DBCols.USER_ID).name()
-//                + ")"
-//                + " REFERENCES "
-//                + UserDataHandler.getTableName() + "("
-//                + _dbColNames.get(DBCols.USER_ID).name()
-//                + ")";
 
         db.execSQL(CREATE_COURSE_TABLE);
     }
@@ -167,7 +137,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
     }
 
     public void addRating(RatingDataModel rating,
-                           CourseDataModel course) {
+                           CourseDataModel course, UserDataModel user) {
 
         ContentValues values = new ContentValues();
 
@@ -178,7 +148,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         values.put(_dbColNames.get(DBCols.COURSE_NUMBER).name(),
                 course.getCourseNumber());
         values.put(_dbColNames.get(DBCols.USER_ID).name(),
-                course.getCourseNumber());
+                user.getUserId());
         values.put(_dbColNames.get(DBCols.HOMEWORK_AMOUNT).name(),
                 rating.getHomework());
         values.put(_dbColNames.get(DBCols.READING_AMOUNT).name(),
