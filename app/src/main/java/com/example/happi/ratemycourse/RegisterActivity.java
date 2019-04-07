@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Check Length
         if (firstName.length() <= 0 || lastName.length() <= 0 || email.length() <= 0 || password.length() <= 0) {
-            alertUser("All fields must not be blank!", "Failed");
+            alertUser("Failed to Register", "All fields must not be blank!");
             return;
         }
 
