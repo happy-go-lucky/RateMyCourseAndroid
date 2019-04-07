@@ -96,4 +96,9 @@ public class UserDataModel
 	{
 		_encodedPassword = value;
 	}
+
+	private static String storeUserId(String _userId){
+		String storeUserId = _userId;
+		return storeUserId;
+	}
 }
