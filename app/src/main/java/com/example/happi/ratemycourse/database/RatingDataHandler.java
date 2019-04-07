@@ -88,13 +88,13 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 + DATATYPE_INT
                 + SEPARATOR_COMMA
 
-                + _dbColNames.get(DBCols.COURSE_CODE).name()
-                + DATATYPE_TEXT
-                + SEPARATOR_COMMA
-
-                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-                + DATATYPE_INT
-                + SEPARATOR_COMMA
+//                + _dbColNames.get(DBCols.COURSE_CODE).name()
+//                + DATATYPE_TEXT
+//                + SEPARATOR_COMMA
+//
+//                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+//                + DATATYPE_INT
+//                + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.USER_ID).name()
                 + DATATYPE_INT
@@ -121,25 +121,41 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 + ")"
                 + SEPARATOR_COMMA
 
-                + " FOREIGN KEY ("
+                + " ("
                 + _dbColNames.get(DBCols.COURSE_CODE).name()
                 + SEPARATOR_COMMA
                 + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-                + ")"
+                + ") "
+                + DATATYPE_INT
                 + " REFERENCES "
-                + CourseDataHandler.getTableName() + "("
-                + _dbColNames.get(DBCols.COURSE_CODE).name()
+                + CourseDataHandler.getTableName()
                 + SEPARATOR_COMMA
-                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
-                + ")"
 
-                + " FOREIGN KEY ("
                 + _dbColNames.get(DBCols.USER_ID).name()
-                + ")"
+                + DATATYPE_INT
                 + " REFERENCES "
-                + UserDataHandler.getTableName() + "("
-                + _dbColNames.get(DBCols.USER_ID).name()
+                + CourseDataHandler.getTableName()
                 + ")";
+
+//                + " FOREIGN KEY ("
+//                + _dbColNames.get(DBCols.COURSE_CODE).name()
+//                + SEPARATOR_COMMA
+//                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+//                + ")"
+//                + " REFERENCES "
+//                + CourseDataHandler.getTableName() + "("
+//                + _dbColNames.get(DBCols.COURSE_CODE).name()
+//                + SEPARATOR_COMMA
+//                + _dbColNames.get(DBCols.COURSE_NUMBER).name()
+//                + ")"
+//
+//                + " FOREIGN KEY ("
+//                + _dbColNames.get(DBCols.USER_ID).name()
+//                + ")"
+//                + " REFERENCES "
+//                + UserDataHandler.getTableName() + "("
+//                + _dbColNames.get(DBCols.USER_ID).name()
+//                + ")";
 
         db.execSQL(CREATE_COURSE_TABLE);
     }
@@ -256,7 +272,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
     // This function may be unnecessary (can use course accessors in main code)
     public RatingDataModel getAllRatingsForCourse(CourseDataModel course) {
 
-        ArrayList<String> courseRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
 
         EnumHelper value = _dbColNames.get(DBCols.RATING_ID);
@@ -299,7 +314,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
 
     public RatingDataModel getAllRatingsByUser(String userID) {
 
-        ArrayList<String> userRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
 
         EnumHelper value = _dbColNames.get(DBCols.RATING_ID);
@@ -341,7 +355,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                                                     CourseDataModel.CourseCode courseCode,
                                                     int courseNumber) {
 
-        ArrayList<String> userRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
 
         EnumHelper value = _dbColNames.get(DBCols.RATING_ID);
