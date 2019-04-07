@@ -17,6 +17,8 @@ import com.example.happi.ratemycourse.database.CourseDataHandler;
 import com.example.happi.ratemycourse.database.CourseDataModel;
 import com.example.happi.ratemycourse.database.RatingDataHandler;
 import com.example.happi.ratemycourse.database.RatingDataModel;
+import com.example.happi.ratemycourse.database.UserDataHandler;
+import com.example.happi.ratemycourse.database.UserDataModel;
 
 import java.util.ArrayList;
 
@@ -44,6 +46,7 @@ public class MainPageFragment extends Fragment
 	private AutoCompleteTextView _searchTextView;
 	private CourseDataHandler _courseDataHandler;
 	private RatingDataHandler _ratingDataHandler;
+	private UserDataHandler _userDataHandler;
 
 	public MainPageFragment()
 	{
@@ -143,7 +146,8 @@ public class MainPageFragment extends Fragment
 	{
 		_courseDataHandler = new CourseDataHandler( getContext() );
 		_ratingDataHandler = new RatingDataHandler(this.getContext());
-	}
+        _userDataHandler = new UserDataHandler(this.getContext());
+    }
 
 	private void testDB() {
 
@@ -160,12 +164,25 @@ public class MainPageFragment extends Fragment
 				);
 		_courseDataHandler.updateCourse( courseDataSent );
 
-		// Add Rating Data
+		// Add User Data
+        byte[] password = {0};
+        UserDataModel userDataSent = new UserDataModel(
+            "A12345678",
+                "peterriviera",
+                "peterriviera@gmail.com",
+                password,
+                "Peter",
+                "Riviera",
+                "BCIT"
+        );
+        _userDataHandler.updateUser( userDataSent );
+
+        // Add Rating Data
 		RatingDataModel ratingDataSent = new RatingDataModel(5, 4, 3, 7);
-		_ratingDataHandler.addRating(ratingDataSent, courseDataSent);
+		_ratingDataHandler.addRating(ratingDataSent, courseDataSent, userDataSent);
 
 		// try to get it back
-		CourseDataModel courseDataReceived = _courseDataHandler.getCourse( CourseDataModel.CourseCode.COMP, 7082 );
+		CourseDataModel courseDataReceived = _courseDataHandler.getCourse( CourseDataModel.CourseCode.COMP, 8051 );
 		RatingDataModel ratingDataRecieved = _ratingDataHandler.getAllRatingsForCourse(courseDataReceived);
 
 	}
