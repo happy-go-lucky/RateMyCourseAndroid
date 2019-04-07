@@ -5,7 +5,9 @@ import android.util.Log;
 
 public class UserDataModel
 {
-	private final String LOG_TAG = "UserDataModel";
+    private static int numberOfUsers = 0;
+
+    private final String LOG_TAG = "UserDataModel";
 	private String _userId;
 	private String _userName;
 	private String _userEmail;
@@ -16,13 +18,14 @@ public class UserDataModel
 
 	public UserDataModel( String userId, String userName, String userEmail, byte[] password, String firstName, String lastName, String schoolName )
 	{
-		_userId = userId;//
+		_userId = userId;
 		_userName = userName;
 		_userEmail = userEmail;
 		_firstName = firstName;
 		_lastName = lastName;
 		_schoolName = schoolName;
 		_encodedPassword = password;
+
 	}
 	public String getUserId()
 	{
