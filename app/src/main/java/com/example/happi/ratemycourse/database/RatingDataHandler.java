@@ -197,7 +197,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return extractAllDataFromCursor(cursor);
     }
 
-    public RatingDataModel getAllRatingsForCourse(
+    public ArrayList<RatingDataModel> getAllRatingsForCourse(
             CourseDataModel.CourseCode courseCode , int courseNumber) {
 
         String[] columns = new String[_dbColNames.size()];
@@ -232,15 +232,23 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
                 null, null, null, null);
 
+        ArrayList<RatingDataModel> resultList = new ArrayList<>();
+
         if (isValidCursor(cursor)) {
-            cursor.moveToFirst();
+            resultList = new ArrayList<>();
+            int ii = 0;
+            while (ii < cursor.getCount()) {
+                cursor.moveToPosition(ii);
+                resultList.add(extractAllDataFromCursor(cursor));
+                ii++;
+            }
         }
 
-        return extractAllDataFromCursor(cursor);
+        return resultList;
     }
 
     // This function may be unnecessary (can use course accessors in main code)
-    public RatingDataModel getAllRatingsForCourse(CourseDataModel course) {
+    public ArrayList<RatingDataModel> getAllRatingsForCourse(CourseDataModel course) {
 
         String[] columns = new String[_dbColNames.size()];
 
@@ -275,14 +283,22 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
                 null, null, null, null);
 
+        ArrayList<RatingDataModel> resultList = new ArrayList<>();
+
         if (isValidCursor(cursor)) {
-            cursor.moveToFirst();
+            resultList = new ArrayList<>();
+            int ii = 0;
+            while (ii < cursor.getCount()) {
+                cursor.moveToPosition(ii);
+                resultList.add(extractAllDataFromCursor(cursor));
+                ii++;
+            }
         }
 
-        return extractAllDataFromCursor(cursor);
+        return resultList;
     }
 
-    public RatingDataModel getAllRatingsByUser(String userID) {
+    public ArrayList<RatingDataModel> getAllRatingsByUser(String userID) {
 
         String[] columns = new String[_dbColNames.size()];
 
@@ -314,11 +330,19 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
                 null, null, null, null);
 
+        ArrayList<RatingDataModel> resultList = new ArrayList<>();
+
         if (isValidCursor(cursor)) {
-            cursor.moveToFirst();
+            resultList = new ArrayList<>();
+            int ii = 0;
+            while (ii < cursor.getCount()) {
+                cursor.moveToPosition(ii);
+                resultList.add(extractAllDataFromCursor(cursor));
+                ii++;
+            }
         }
 
-        return extractAllDataFromCursor(cursor);
+        return resultList;
     }
 
     public RatingDataModel getCourseRatingByUser(String userID,
