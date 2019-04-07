@@ -107,42 +107,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/id_section"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_weight="10"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lname_section">
-
-        <TextView
-            android:id="@+id/label_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="40"
-            android:labelFor="@+id/text_email"
-            android:text="@string/id_label"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/text_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="60"
-            android:autofillHints="@+id/text_email"
-            android:ems="10"
-            android:inputType="text" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/email_section"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -154,7 +118,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_section">
+        app:layout_constraintTop_toBottomOf="@+id/lname_section">
 
         <TextView
             android:id="@+id/label_email"
@@ -225,6 +189,7 @@
         android:layout_marginEnd="8dp"
         android:layout_weight="2"
         android:gravity="center"
+        android:onClick="onRegisterButtonPressed"
         android:paddingHorizontal="10dp"
         android:paddingVertical="10dp"
         android:text="@string/signup"
