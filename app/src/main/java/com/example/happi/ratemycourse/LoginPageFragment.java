@@ -19,6 +19,8 @@ import com.example.happi.ratemycourse.database.UserDataHandler;
 import com.example.happi.ratemycourse.database.UserDataModel;
 import com.example.happi.ratemycourse.util.TextEncoder;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -196,7 +198,14 @@ public class LoginPageFragment extends Fragment
 
 		if (userData == null) {
 
-		    UserDataModel newUser = new UserDataModel("defaultID", uname, "N/A",
+		    ArrayList<UserDataModel> tempUserList = _dataHandler.getAllEntries();
+
+		    UserDataModel lastUser = tempUserList.get(tempUserList.size() - 1);
+		    int lastUserID = Integer.parseInt(lastUser.getUserId());
+		    lastUserID++;
+
+
+		    UserDataModel newUser = new UserDataModel(Integer.toString(lastUserID), uname, "N/A",
                     _textEncoder.getEncodedText(password), "none",
                     "N/A", "N/A");
 
