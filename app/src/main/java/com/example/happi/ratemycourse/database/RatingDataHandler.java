@@ -150,7 +150,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    private void addRating(RatingDataModel rating,
+    public void addRating(RatingDataModel rating,
                            CourseDataModel course) {
 
         ContentValues values = new ContentValues();
@@ -175,7 +175,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         _db.insert(TABLE_NAME, null, values);
     }
 
-    private RatingDataModel getRating(int ratingID) {
+    public RatingDataModel getRating(int ratingID) {
 
         String[] columns = new String[_dbColNames.size()];
 
@@ -211,7 +211,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return extractAllDataFromCursor(cursor);
     }
 
-    private ArrayList<String> getAllRatingsForCourse(
+    public ArrayList<String> getAllRatingsForCourse(
             CourseDataModel.CourseCode courseCode , int courseNumber) {
 
         String[] columns = new String[_dbColNames.size()];
@@ -261,7 +261,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
     }
 
     // This function may be unnecessary (can use course accessors in main code)
-    private ArrayList<String> getAllRatingsForCourse(CourseDataModel course) {
+    public ArrayList<String> getAllRatingsForCourse(CourseDataModel course) {
 
         ArrayList<String> courseRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
@@ -310,7 +310,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return courseRatingsList;
     }
 
-    private ArrayList<String> getAllRatingsByUser(String userID) {
+    public ArrayList<String> getAllRatingsByUser(String userID) {
 
         ArrayList<String> userRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
@@ -356,7 +356,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return userRatingsList;
     }
 
-    private ArrayList<String> getCourseRatingByUser(String userID,
+    public ArrayList<String> getCourseRatingByUser(String userID,
                                                     CourseDataModel.CourseCode courseCode,
                                                     int courseNumber) {
 
@@ -412,7 +412,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
 
     //get user rating for course
 
-    private int getAverageForEachCriteria(
+    public int getAverageForEachCriteria(
             CourseDataModel.CourseCode courseCode, int courseNumber) {
         return 0;
     }
