@@ -15,6 +15,10 @@ import android.widget.AutoCompleteTextView;
 
 import com.example.happi.ratemycourse.database.CourseDataHandler;
 import com.example.happi.ratemycourse.database.CourseDataModel;
+import com.example.happi.ratemycourse.database.RatingDataHandler;
+import com.example.happi.ratemycourse.database.RatingDataModel;
+import com.example.happi.ratemycourse.database.UserDataHandler;
+import com.example.happi.ratemycourse.database.UserDataModel;
 
 import java.util.ArrayList;
 
@@ -40,7 +44,9 @@ public class MainPageFragment extends Fragment
 
 	private View _view;
 	private AutoCompleteTextView _searchTextView;
-	private CourseDataHandler _dataHandler;
+	private CourseDataHandler _courseDataHandler;
+	private RatingDataHandler _ratingDataHandler;
+	private UserDataHandler _userDataHandler;
 
 	public MainPageFragment()
 	{
@@ -94,7 +100,7 @@ public class MainPageFragment extends Fragment
 	public void onDetach()
 	{
 		super.onDetach();
-		if ( _dataHandler != null ) _dataHandler.close();
+		if ( _courseDataHandler != null ) _courseDataHandler.close();
 	}
 
 	@Override
@@ -116,7 +122,7 @@ public class MainPageFragment extends Fragment
 
 		_searchTextView.setThreshold(2);
 
-		ArrayList<String> entries = _dataHandler.getAllCourseCodesAndNumbers();
+		ArrayList<String> entries = _courseDataHandler.getAllCourseCodesAndNumbers();
 
 		if (entries == null) {
 			Log.e("COURSE LIST ENTRIES", "Failed to fetch course listing");
@@ -138,11 +144,14 @@ public class MainPageFragment extends Fragment
 
 	private void initDatabase()
 	{
-		_dataHandler = new CourseDataHandler( getContext() );
-	}
+		_courseDataHandler = new CourseDataHandler( getContext() );
+		_ratingDataHandler = new RatingDataHandler(this.getContext());
+        _userDataHandler = new UserDataHandler(this.getContext());
+    }
 
-	private void testDB()
-	{
+	private void testDB() {
+
+		// Add course data
 		CourseDataModel courseDataSent = new CourseDataModel(
 				CourseDataModel.CourseCode.COMP,
 				8051,
@@ -153,17 +162,45 @@ public class MainPageFragment extends Fragment
 				"Noureddin",
 				"Bourna"
 				);
+		_courseDataHandler.updateCourse( courseDataSent );
 
-		_dataHandler.updateCourse( courseDataSent );
+		// Add User Data
+        byte[] password = {0};
+        UserDataModel userDataSent = new UserDataModel(
+            "A12345678",
+                "peterriviera",
+                "peterriviera@gmail.com",
+                password,
+                "Peter",
+                "Riviera",
+                "BCIT"
+        );
+        _userDataHandler.updateUser( userDataSent );
 
-		CourseDataModel courseDataReceived = _dataHandler.getCourse( CourseDataModel.CourseCode.COMP, 7082 );
-		if ( courseDataReceived != null )
-		{
-			Log.d( LOG_TAG + " data received", courseDataReceived.toString() );
-		}
-		else
-		{
-			Log.d( LOG_TAG, " data received is null" );
-		}
+		UserDataModel userDataSent2 = new UserDataModel(
+				"A12653654",
+				"xxUsernameXX",
+				"stillusinghotmail@yahoo.com",
+				password,
+				"Kirk",
+				"Land",
+				"BCIT"
+		);
+		_userDataHandler.updateUser( userDataSent2 );
+
+
+        // Add Rating Data
+		RatingDataModel ratingDataSent = new RatingDataModel(5, 4, 3, 7);
+		_ratingDataHandler.addRating(ratingDataSent, courseDataSent, userDataSent);
+
+		RatingDataModel ratingDataSent2 = new RatingDataModel(3, 6, 1, 1);
+		_ratingDataHandler.addRating(ratingDataSent2, courseDataSent, userDataSent2);
+
+		// try to get it back
+		CourseDataModel courseDataReceived = _courseDataHandler.getCourse( CourseDataModel.CourseCode.COMP, 8051 );
+		ArrayList<RatingDataModel> ratingDataRecieved = _ratingDataHandler.getAllRatingsForCourse(courseDataReceived);
+
+		RatingDataModel ratingDataRecievedSingle = _ratingDataHandler.getCourseRatingByUser("A12653654", CourseDataModel.CourseCode.COMP, 8051);
+
 	}
 }

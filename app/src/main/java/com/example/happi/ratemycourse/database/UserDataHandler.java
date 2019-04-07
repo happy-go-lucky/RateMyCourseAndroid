@@ -103,7 +103,7 @@ public class UserDataHandler extends SQLiteOpenHelper
 		onCreate( db );
 	}
 
-	private void addUser( UserDataModel userData )
+	public void addUser( UserDataModel userData )
 	{
 		//_db = getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -294,5 +294,9 @@ public class UserDataHandler extends SQLiteOpenHelper
 	private boolean isValidCursor( Cursor cursor )
 	{
 		return ( cursor != null ) && ( cursor.getCount() > 0 ) && ( cursor.getColumnCount() > 0 );
+	}
+
+	public static String getTableName() {
+		return TABLE_NAME;
 	}
 }

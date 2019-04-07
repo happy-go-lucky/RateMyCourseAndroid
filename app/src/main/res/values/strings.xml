@@ -13,6 +13,9 @@
     <string name="login_success_message">Login is successful.</string>
     <string name="login_fail_message">Login failed. Please check your credential.</string>
     <string name="login_message_title">Login Status</string>
+    <string name="signup_success_message">Sign Up is successful.</string>
+    <string name="signup_fail_message">Sign Up failed. Please check your credential.</string>
+    <string name="signup_message_title">Sign Up Status</string>
     <string name="autocomplete_hint">Enter course number</string>
 
     <!-- TODO: Remove or change this placeholder text -->

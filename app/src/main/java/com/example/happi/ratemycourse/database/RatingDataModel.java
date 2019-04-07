@@ -39,8 +39,7 @@ public class RatingDataModel {
         _usefulness = usefulness;
         _stress = stress;
 
-        numberOfRatings++;
-        _ratingID = numberOfRatings;
+        _ratingID = ++numberOfRatings;
     }
 
     public int getRatingID() {
