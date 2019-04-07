@@ -2,39 +2,29 @@ package com.example.happi.ratemycourse.database;
 
 import android.util.Log;
 
+import com.example.happi.ratemycourse.util.TextEncoder;
+
+import org.w3c.dom.Text;
+
 
 public class UserDataModel
 {
     private static int numberOfUsers = 0;
 
     private final String LOG_TAG = "UserDataModel";
-	private String _userId;
-	private String _userName;
 	private String _userEmail;
 	private String _firstName;
 	private String _lastName;
 	private String _schoolName;
 	private byte[] _encodedPassword;
 
-	public UserDataModel( String userId, String userName, String userEmail, byte[] password, String firstName, String lastName, String schoolName )
+	public UserDataModel( String userEmail, byte[] password, String firstName, String lastName, String schoolName )
 	{
-		_userId = userId;
-		_userName = userName;
 		_userEmail = userEmail;
-		_firstName = firstName;
-		_lastName = lastName;
-		_schoolName = schoolName;
-		_encodedPassword = password;
-
-	}
-	public String getUserId()
-	{
-		return _userId;
-	}
-
-	public String getUserName()
-	{
-		return _userName;
+        _encodedPassword = password;
+        _firstName = firstName;
+        _lastName = lastName;
+        _schoolName = schoolName;
 	}
 
 	public String getUserEmail()
@@ -60,16 +50,6 @@ public class UserDataModel
 	public byte[] getPassword()
 	{
 		return _encodedPassword;
-	}
-
-	public void setUserId( String value )
-	{
-		_userId = value;
-	}
-
-	public void setUserName( String value )
-	{
-		_userName = value;
 	}
 
 	public void setUserEmail( String value )
