@@ -186,10 +186,10 @@ public class LoginPageFragment extends Fragment
 		}
 	}
 
-	private string storeUserId(UserDataModel userData){
-		String userID = UserDataModel.getUserId();
-		return userID;
-	}
+//	private string storeUserId(UserDataModel userData){
+//		String userID = UserDataModel.getUserId();
+//		return userID;
+//	}
 
 	private void alertUser( int Message, int title )
 	{
