@@ -43,10 +43,13 @@ public class RegisterActivity extends AppCompatActivity {
         // Check Length
         if (firstName.length() <= 0 || lastName.length() <= 0 || email.length() <= 0 || password.length() <= 0) {
             alertUser("All fields must not be blank!", "Failed");
+            return;
         }
 
         // TODO check if email is existing
 
+
+        // to close this activity, use finish();
     }
 
     /***
