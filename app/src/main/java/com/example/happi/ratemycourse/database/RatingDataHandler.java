@@ -33,7 +33,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         RATING_ID,
         COURSE_CODE,
         COURSE_NUMBER,
-        USER_ID,
+        USER_EMAIL,
         HOMEWORK_AMOUNT,
         READING_AMOUNT,
         USEFULNESS,
@@ -53,8 +53,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 new EnumHelper("course_code", index++));
         _dbColNames.put(DBCols.COURSE_NUMBER,
                 new EnumHelper("course_number", index++));
-        _dbColNames.put(DBCols.USER_ID,
-                new EnumHelper("user_id", index++));
+        _dbColNames.put(DBCols.USER_EMAIL,
+                new EnumHelper("user_email", index++));
         _dbColNames.put(DBCols.HOMEWORK_AMOUNT,
                 new EnumHelper("homework_amount", index++));
         _dbColNames.put(DBCols.READING_AMOUNT,
@@ -89,8 +89,13 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 + " PRIMARY KEY "
                 + SEPARATOR_COMMA
 
-                + _dbColNames.get(DBCols.USER_ID).name()
+                + _dbColNames.get(DBCols.USER_EMAIL).name()
                 + DATATYPE_INT
+                + "REFERENCES"
+                + UserDataHandler.getTableName()
+                + "("
+                + _dbColNames.get(DBCols.USER_EMAIL).name()
+                + ")"
                 + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.COURSE_CODE).name()
@@ -147,8 +152,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 course.getCourseCode().toString());
         values.put(_dbColNames.get(DBCols.COURSE_NUMBER).name(),
                 course.getCourseNumber());
-        values.put(_dbColNames.get(DBCols.USER_ID).name(),
-                user.getUserId());
+        values.put(_dbColNames.get(DBCols.USER_EMAIL).name(),
+                user.getUserEmail());
         values.put(_dbColNames.get(DBCols.HOMEWORK_AMOUNT).name(),
                 rating.getHomework());
         values.put(_dbColNames.get(DBCols.READING_AMOUNT).name(),
@@ -171,7 +176,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
         columns[value.index()] = value.name();
-        value = _dbColNames.get(DBCols.USER_ID);
+        value = _dbColNames.get(DBCols.USER_EMAIL);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -208,7 +213,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
         columns[value.index()] = value.name();
-        value = _dbColNames.get(DBCols.USER_ID);
+        value = _dbColNames.get(DBCols.USER_EMAIL);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -258,7 +263,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
         columns[value.index()] = value.name();
-        value = _dbColNames.get(DBCols.USER_ID);
+        value = _dbColNames.get(DBCols.USER_EMAIL);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -308,7 +313,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
         columns[value.index()] = value.name();
-        value = _dbColNames.get(DBCols.USER_ID);
+        value = _dbColNames.get(DBCols.USER_EMAIL);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -319,7 +324,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         value = _dbColNames.get(DBCols.STRESS_LEVEL);
         columns[value.index()] = value.name();
 
-        String whereClause = _dbColNames.get(DBCols.USER_ID).name()
+        String whereClause = _dbColNames.get(DBCols.USER_EMAIL).name()
                 + " = ?";
 
         String[] whereArgs =
@@ -357,7 +362,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.COURSE_NUMBER);
         columns[value.index()] = value.name();
-        value = _dbColNames.get(DBCols.USER_ID);
+        value = _dbColNames.get(DBCols.USER_EMAIL);
         columns[value.index()] = value.name();
         value = _dbColNames.get(DBCols.HOMEWORK_AMOUNT);
         columns[value.index()] = value.name();
@@ -372,7 +377,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 + " = ? AND "
                 + _dbColNames.get(DBCols.COURSE_NUMBER).name()
                 + " = ? AND "
-                + _dbColNames.get(DBCols.USER_ID).name()
+                + _dbColNames.get(DBCols.USER_EMAIL).name()
                 + " = ?";
 
         String[] whereArgs =

@@ -41,10 +41,8 @@ public class UserDataHandler extends SQLiteOpenHelper
 
 	public enum DBCols
 	{
-		USER_ID,
-		USERNAME,
-		PASSWORD,
 		USER_EMAIL,
+		PASSWORD,
 		FIRST_NAME,
 		LAST_NAME,
 		SCHOOL_NAME
@@ -64,10 +62,8 @@ public class UserDataHandler extends SQLiteOpenHelper
 
 		_dbColNames = new EnumMap<DBCols, EnumHelper>( DBCols.class );
 		int index = 0;
-		_dbColNames.put( DBCols.USER_ID, new EnumHelper( "user_id", index++ ) );
-		_dbColNames.put( DBCols.USERNAME, new EnumHelper( "username", index++ ) );
-		_dbColNames.put( DBCols.PASSWORD, new EnumHelper( "password", index++ ) );
 		_dbColNames.put( DBCols.USER_EMAIL, new EnumHelper( "user_email", index++ ) );
+		_dbColNames.put( DBCols.PASSWORD, new EnumHelper( "password", index++ ) );
 		_dbColNames.put( DBCols.FIRST_NAME, new EnumHelper( "first_name", index++ ) );
 		_dbColNames.put( DBCols.LAST_NAME, new EnumHelper( "last_name", index++ ) );
 		_dbColNames.put( DBCols.SCHOOL_NAME, new EnumHelper( "school_name", index++ ) );
@@ -81,14 +77,12 @@ public class UserDataHandler extends SQLiteOpenHelper
 	{
 		Log.d( LOG_TAG, "onCreate" );
 		String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-				+ _dbColNames.get( DBCols.USER_ID ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.USERNAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.USER_EMAIL ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+				+ _dbColNames.get( DBCols.USER_EMAIL ).name() + DATATYPE_TEXT + "PRIMARY KEY" + SEPARATOR_COMMA
 				+ _dbColNames.get( DBCols.PASSWORD ).name() + DATATYPE_BLOB + SEPARATOR_COMMA
 				+ _dbColNames.get( DBCols.FIRST_NAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
 				+ _dbColNames.get( DBCols.LAST_NAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
 				+ _dbColNames.get( DBCols.SCHOOL_NAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ "PRIMARY KEY (" + _dbColNames.get( DBCols.USER_ID ).name() + ")" + ")";
+				+ ")";
 
 		db.execSQL( CREATE_USER_TABLE );
 	}
@@ -108,8 +102,6 @@ public class UserDataHandler extends SQLiteOpenHelper
 		//_db = getWritableDatabase();
 		ContentValues values = new ContentValues();
 
-		values.put( _dbColNames.get( DBCols.USER_ID ).name(), userData.getUserId() );
-		values.put( _dbColNames.get( DBCols.USERNAME ).name(), userData.getUserName() );
 		values.put( _dbColNames.get( DBCols.USER_EMAIL ).name(), userData.getUserEmail() );
 		values.put( _dbColNames.get( DBCols.PASSWORD ).name(), userData.getPassword() );
 		values.put( _dbColNames.get( DBCols.FIRST_NAME ).name(), userData.getFirstName() );
@@ -125,10 +117,6 @@ public class UserDataHandler extends SQLiteOpenHelper
 
 		String[] columns = new String[_dbColNames.size()];
 		EnumHelper value = _dbColNames.get( DBCols.USER_EMAIL );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.USER_ID );
-		columns[value.index()] = value.name();
-		value = _dbColNames.get( DBCols.USERNAME );
 		columns[value.index()] = value.name();
 		value = _dbColNames.get( DBCols.USER_EMAIL );
 		columns[value.index()] = value.name();
@@ -179,8 +167,6 @@ public class UserDataHandler extends SQLiteOpenHelper
 		if ( isDuplicateData( userData ) )
 		{
 			ContentValues values = new ContentValues();
-			values.put( _dbColNames.get( DBCols.USER_ID ).name(), userData.getUserId() );
-			values.put( _dbColNames.get( DBCols.USERNAME ).name(), userData.getUserName() );
 			values.put( _dbColNames.get( DBCols.USER_EMAIL ).name(), userData.getUserEmail() );
 			values.put( _dbColNames.get( DBCols.PASSWORD ).name(), userData.getPassword() );
 			values.put( _dbColNames.get( DBCols.FIRST_NAME ).name(), userData.getFirstName() );
@@ -238,8 +224,6 @@ public class UserDataHandler extends SQLiteOpenHelper
 			return null;
 		}
 
-		String db_userId = rowCursor.getString( _dbColNames.get( DBCols.USER_ID ).index() );
-		String db_userName = rowCursor.getString( _dbColNames.get( DBCols.USERNAME ).index() );
 		String db_userEmail = rowCursor.getString( _dbColNames.get( DBCols.USER_EMAIL ).index() );
 		byte[] db_password =rowCursor.getBlob( _dbColNames.get( DBCols.PASSWORD ).index() );
 		String db_firstName = rowCursor.getString( _dbColNames.get( DBCols.FIRST_NAME ).index() );
@@ -248,8 +232,6 @@ public class UserDataHandler extends SQLiteOpenHelper
 
 		UserDataModel userData = new UserDataModel
 				(
-						db_userId,
-						db_userName,
 						db_userEmail,
 						db_password,
 						db_firstName,

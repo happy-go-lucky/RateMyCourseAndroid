@@ -44,6 +44,7 @@ public class LoginPageFragment extends Fragment
 	private String mParam1;
 	private String mParam2;
 
+	// TODO: Add first and last name parameters, for user to fill out during signup.
 	private TextEncoder _textEncoder;
 	private View _view;
 	private EditText _email;
@@ -201,28 +202,24 @@ public class LoginPageFragment extends Fragment
 //		return userID;
 //	}
 
-	private void validateSignUpClick (String uname, String password) {
+	private void validateSignUpClick (String email, String password, String firstName,
+                                      String lastName) {
 
-		UserDataModel userData = _dataHandler.getUser(uname);
+	    // Check if user email already exists in database
+		UserDataModel userData = _dataHandler.getUser(email);
 
+		// If it doesn't exist
 		if (userData == null) {
-
-		    ArrayList<UserDataModel> tempUserList = _dataHandler.getAllEntries();
-
-		    UserDataModel lastUser = tempUserList.get(tempUserList.size() - 1);
-		    int lastUserID = Integer.parseInt(lastUser.getUserId());
-		    lastUserID++;
-
-
-		    UserDataModel newUser = new UserDataModel(Integer.toString(lastUserID), uname, "N/A",
-                    _textEncoder.getEncodedText(password), "none",
-                    "N/A", "N/A");
-
+		    // Encode the password
+		    byte[] encodedPassword = _textEncoder.getEncodedText(password);
+		    // Create a user
+		    UserDataModel newUser = new UserDataModel(email, encodedPassword, firstName,
+                    lastName, "BCIT");
+            // And add the user to the database
 		    _dataHandler.addUser(newUser);
 
 			alertUser(R.string.signup_success_message, R.string.signup_message_title);
-		}
-		else {
+		} else {
 			alertUser(R.string.signup_fail_message, R.string.signup_message_title);
 		}
 	}
@@ -249,13 +246,11 @@ public class LoginPageFragment extends Fragment
 
 	private void testDB()
 	{
-		UserDataModel userDataSent = new UserDataModel(
-		        "1",
-                "John123",
-                "JohnD25@my.bcit.ca",
-                new byte[]{1,2,3,4},
-                "John",
-                "Doe",
+        UserDataModel userDataSent = new UserDataModel (
+		        "PeterPerogi@my.bcit.ca",
+                _textEncoder.getEncodedText("strongpassword"),
+                "Peter",
+                "Perogi",
                 "BC-BCIT");
 
 		_dataHandler.updateUser( userDataSent );
