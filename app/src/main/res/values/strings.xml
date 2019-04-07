@@ -25,4 +25,15 @@
     <string name="reading_score_header">Reading Score</string>
     <string name="stress_score_header">Stress Score</string>
     <string name="average_score_header">Average Score</string>
+
+    <string name="addCourse">Add Course</string>
+    <string name="courseName">Course Name</string>
+    <string name="courseNumber">Course Number</string>
+    <string name="yearOffered">Year Offered</string>
+    <string name="instructorName">Instructor Name</string>
+    <string name="semesterOffered">Semester Offered</string>
+    <string name="courseMode">Course Mode</string>
+    <string name="courseMessageTitle">Message.</string>
+    <string name="courseAddSuccess">Course Added successfully.</string>
+    <string name="courseAddFail">Unable to add new Course.</string>
 </resources>
