@@ -78,7 +78,7 @@ public class UserDataModel
 	}
 
 	private static String storeUserId(String _userId){
-		String storeUserId = _userId;
+		static String storeUserId = _userId;
 		return storeUserId;
 	}
 }
