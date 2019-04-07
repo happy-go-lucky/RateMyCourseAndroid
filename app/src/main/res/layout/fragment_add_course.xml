@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100dp"
+    android:layout_marginBottom="100dp"
+    android:orientation="vertical"
+    tools:context=".AddCourseFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/label_courseName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:labelFor="@+id/text_courseName"
+            android:text="@string/courseName" />
+
+        <EditText
+            android:id="@+id/text_courseName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAllCaps="true"
+            android:autofillHints="@+id/text_courseName"
+            android:inputType="textCapSentences"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/label_courseNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:labelFor="@+id/text_courseNumber"
+            android:text="@string/courseNumber" />
+
+        <EditText
+            android:id="@+id/text_courseNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:autofillHints="@+id/text_courseNumber"
+            android:inputType="phone"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/label_yearOffered"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:labelFor="@+id/text_courseName"
+            android:text="@string/yearOffered" />
+
+        <EditText
+            android:id="@+id/text_yearOffered"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAllCaps="true"
+            android:autofillHints="@+id/text_courseName"
+            android:inputType="textCapSentences"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/label_semesterOffered"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:labelFor="@+id/text_courseName"
+            android:text="@string/semesterOffered" />
+
+        <Spinner
+            android:id="@+id/semesterOffered_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/label_instructorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:labelFor="@+id/text_courseName"
+            android:text="@string/instructorName" />
+
+        <EditText
+            android:id="@+id/text_instructorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textAllCaps="true"
+            android:autofillHints="@+id/text_courseName"
+            android:inputType="textCapSentences"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_saveCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:text="@string/addCourse" />
+
+
+</LinearLayout>

@@ -173,10 +173,14 @@ public class LoginPageFragment extends Fragment
 	private void onSignUpButtonClick( View v )
 	{
 		Log.d( LOG_TAG, "onSignUpButtonClick" );
-		String userName = _email.getText().toString();
-		String password = _password.getText().toString();
+//		String userName = _email.getText().toString();
+//		String password = _password.getText().toString();
+//
+//		validateSignUpClick(userName, password);
 
-		validateSignUpClick(userName, password, );
+		// open a new registerAcitivty activity
+		Intent intent = new Intent(getActivity(), RegisterActivity.class);
+		startActivity(intent);
 	}
 
 	private void validateLogin( String uname, String password )
