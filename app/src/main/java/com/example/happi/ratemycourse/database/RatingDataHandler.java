@@ -211,7 +211,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
         return extractAllDataFromCursor(cursor);
     }
 
-    public ArrayList<String> getAllRatingsForCourse(
+    public RatingDataModel getAllRatingsForCourse(
             CourseDataModel.CourseCode courseCode , int courseNumber) {
 
         String[] columns = new String[_dbColNames.size()];
@@ -243,25 +243,18 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                         String.valueOf(courseNumber)
                 };
 
-        Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
-                whereArgs, null, null, null, null );
-        ArrayList<String> courseRatingsList = null;
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
 
         if (isValidCursor(cursor)) {
-            courseRatingsList = new ArrayList<>();
-            int ii = 0;
-            while (ii < cursor.getCount()) {
-                cursor.moveToPosition(ii);
-                courseRatingsList.add(extractDataFromCursor(cursor, columns));
-                ii++;
-            }
+            cursor.moveToFirst();
         }
 
-        return courseRatingsList;
+        return extractAllDataFromCursor(cursor);
     }
 
     // This function may be unnecessary (can use course accessors in main code)
-    public ArrayList<String> getAllRatingsForCourse(CourseDataModel course) {
+    public RatingDataModel getAllRatingsForCourse(CourseDataModel course) {
 
         ArrayList<String> courseRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
@@ -294,23 +287,17 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                         String.valueOf(course.getCourseNumber())
                 };
 
-        Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
-                whereArgs, null, null, null, null );
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
 
         if (isValidCursor(cursor)) {
-            courseRatingsList = new ArrayList<>();
-            int ii = 0;
-            while (ii < cursor.getCount()) {
-                cursor.moveToPosition(ii);
-                courseRatingsList.add(extractDataFromCursor(cursor, columns));
-                ii++;
-            }
+            cursor.moveToFirst();
         }
 
-        return courseRatingsList;
+        return extractAllDataFromCursor(cursor);
     }
 
-    public ArrayList<String> getAllRatingsByUser(String userID) {
+    public RatingDataModel getAllRatingsByUser(String userID) {
 
         ArrayList<String> userRatingsList = null;
         String[] columns = new String[_dbColNames.size()];
@@ -340,23 +327,17 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                         String.valueOf(userID)
                 };
 
-        Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
-                whereArgs, null, null, null, null );
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
 
         if (isValidCursor(cursor)) {
-            userRatingsList = new ArrayList<>();
-            int ii = 0;
-            while (ii < cursor.getCount()) {
-                cursor.moveToPosition(ii);
-                userRatingsList.add(extractDataFromCursor(cursor, columns));
-                ii++;
-            }
+            cursor.moveToFirst();
         }
 
-        return userRatingsList;
+        return extractAllDataFromCursor(cursor);
     }
 
-    public ArrayList<String> getCourseRatingByUser(String userID,
+    public RatingDataModel getCourseRatingByUser(String userID,
                                                     CourseDataModel.CourseCode courseCode,
                                                     int courseNumber) {
 
@@ -394,20 +375,14 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                         String.valueOf(userID)
                 };
 
-        Cursor cursor = _db.query( TABLE_NAME, columns, whereClause,
-                whereArgs, null, null, null, null );
+        Cursor cursor = _db.query(TABLE_NAME, columns, whereClause, whereArgs,
+                null, null, null, null);
 
         if (isValidCursor(cursor)) {
-            userRatingsList = new ArrayList<>();
-            int ii = 0;
-            while (ii < cursor.getCount()) {
-                cursor.moveToPosition(ii);
-                userRatingsList.add(extractDataFromCursor(cursor, columns));
-                ii++;
-            }
+            cursor.moveToFirst();
         }
 
-        return userRatingsList;
+        return extractAllDataFromCursor(cursor);
     }
 
     //get user rating for course
