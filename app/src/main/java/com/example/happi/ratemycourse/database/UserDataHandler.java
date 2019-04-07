@@ -103,7 +103,7 @@ public class UserDataHandler extends SQLiteOpenHelper
 		onCreate( db );
 	}
 
-	private void addUser( UserDataModel userData )
+	public void addUser( UserDataModel userData )
 	{
 		//_db = getWritableDatabase();
 		ContentValues values = new ContentValues();

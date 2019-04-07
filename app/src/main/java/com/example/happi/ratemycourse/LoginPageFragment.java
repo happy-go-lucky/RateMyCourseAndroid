@@ -3,6 +3,7 @@ package com.example.happi.ratemycourse;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,8 @@ import android.widget.EditText;
 import com.example.happi.ratemycourse.database.UserDataHandler;
 import com.example.happi.ratemycourse.database.UserDataModel;
 import com.example.happi.ratemycourse.util.TextEncoder;
+
+import java.util.ArrayList;
 
 
 /**
@@ -171,12 +174,15 @@ public class LoginPageFragment extends Fragment
 		Log.d( LOG_TAG, "onSignUpButtonClick" );
 		String userName = _email.getText().toString();
 		String password = _password.getText().toString();
+
+		validateSignUpClick(userName, password);
 	}
 
 	private void validateLogin( String uname, String password )
 	{
 		UserDataModel userData = _dataHandler.getUser( uname );
-		if ( userData != null && java.util.Arrays.equals( userData.getPassword(), _textEncoder.getEncodedText( password ) ) )
+		if ( userData != null && java.util.Arrays.equals( userData.getPassword(),
+                _textEncoder.getEncodedText( password ) ) )
 		{
 			alertUser( R.string.login_success_message, R.string.login_message_title );
 		}
@@ -190,6 +196,32 @@ public class LoginPageFragment extends Fragment
 //		String userID = UserDataModel.getUserId();
 //		return userID;
 //	}
+
+	private void validateSignUpClick (String uname, String password) {
+
+		UserDataModel userData = _dataHandler.getUser(uname);
+
+		if (userData == null) {
+
+		    ArrayList<UserDataModel> tempUserList = _dataHandler.getAllEntries();
+
+		    UserDataModel lastUser = tempUserList.get(tempUserList.size() - 1);
+		    int lastUserID = Integer.parseInt(lastUser.getUserId());
+		    lastUserID++;
+
+
+		    UserDataModel newUser = new UserDataModel(Integer.toString(lastUserID), uname, "N/A",
+                    _textEncoder.getEncodedText(password), "none",
+                    "N/A", "N/A");
+
+		    _dataHandler.addUser(newUser);
+
+			alertUser(R.string.signup_success_message, R.string.signup_message_title);
+		}
+		else {
+			alertUser(R.string.signup_fail_message, R.string.signup_message_title);
+		}
+	}
 
 	private void alertUser( int Message, int title )
 	{
