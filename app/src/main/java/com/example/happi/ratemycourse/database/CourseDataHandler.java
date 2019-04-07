@@ -395,14 +395,4 @@ public class CourseDataHandler extends SQLiteOpenHelper
     public static String getTableName() {
         return TABLE_NAME;
     }
-
-    /*
-    public boolean checkDataBaseExists()
-    {
-        try
-        {
-            _db.
-        }
-    }
-    */
 }

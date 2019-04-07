@@ -156,7 +156,7 @@ public class AddCourseFragment extends Fragment
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
+    //TODO: link it with course data handler
     private void validateUserInput( String courseName, int courseNumber )
     {
         /*CourseDataModel courseData = _dataHandler.getCourse( courseName, courseNumber );
