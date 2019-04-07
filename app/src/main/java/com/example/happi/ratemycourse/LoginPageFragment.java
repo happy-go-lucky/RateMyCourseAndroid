@@ -186,6 +186,11 @@ public class LoginPageFragment extends Fragment
 		}
 	}
 
+	private string storeUserId(UserDataModel userData){
+		String userID = UserDataModel.getUserId();
+		return userID;
+	}
+
 	private void alertUser( int Message, int title )
 	{
 		// 1. Instantiate an AlertDialog.Builder with its constructor
