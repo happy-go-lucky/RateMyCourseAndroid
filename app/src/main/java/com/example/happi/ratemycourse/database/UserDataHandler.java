@@ -81,7 +81,7 @@ public class UserDataHandler extends SQLiteOpenHelper
 				+ _dbColNames.get( DBCols.PASSWORD ).name() + DATATYPE_BLOB + SEPARATOR_COMMA
 				+ _dbColNames.get( DBCols.FIRST_NAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
 				+ _dbColNames.get( DBCols.LAST_NAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
-				+ _dbColNames.get( DBCols.SCHOOL_NAME ).name() + DATATYPE_TEXT + SEPARATOR_COMMA
+				+ _dbColNames.get( DBCols.SCHOOL_NAME ).name() + DATATYPE_TEXT
 				+ ")";
 
 		db.execSQL( CREATE_USER_TABLE );
