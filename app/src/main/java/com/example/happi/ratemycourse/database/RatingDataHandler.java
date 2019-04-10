@@ -77,7 +77,6 @@ public class RatingDataHandler extends SQLiteOpenHelper {
     private static final String OPEN_PARENTHESIS = "(";
     private static final String CLOSE_PARENTHESIS = ")"; */
 
-    //TODO Test foreign key implementation
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -90,8 +89,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 + SEPARATOR_COMMA
 
                 + _dbColNames.get(DBCols.USER_EMAIL).name()
-                + DATATYPE_INT
-                + "REFERENCES"
+                + DATATYPE_TEXT
+                + "REFERENCES "
                 + UserDataHandler.getTableName()
                 + "("
                 + _dbColNames.get(DBCols.USER_EMAIL).name()
@@ -164,6 +163,7 @@ public class RatingDataHandler extends SQLiteOpenHelper {
                 rating.getStress());
 
         _db.insert(TABLE_NAME, null, values);
+
     }
 
     public RatingDataModel getRating(int ratingID) {
@@ -398,9 +398,8 @@ public class RatingDataHandler extends SQLiteOpenHelper {
     }
 
     //get user rating for course
+    public int getAverageForCriteria() {
 
-    public int getAverageForEachCriteria(
-            CourseDataModel.CourseCode courseCode, int courseNumber) {
         return 0;
     }
 
