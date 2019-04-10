@@ -29,143 +29,142 @@ import java.util.ArrayList;
  * Use the {@link MainPageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainPageFragment extends Fragment
-{
+public class MainPageFragment extends Fragment {
 
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-	private static final String LOG_TAG = "MainPageFragment";
+    private static final String LOG_TAG = "MainPageFragment";
 
-	// TODO: Rename and change types of parameters
-	private String mParam1;
-	private String mParam2;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
-	private View _view;
-	private AutoCompleteTextView _searchTextView;
-	private CourseDataHandler _courseDataHandler;
-	private RatingDataHandler _ratingDataHandler;
-	private UserDataHandler _userDataHandler;
+    private View _view;
+    private AutoCompleteTextView _searchTextView;
+    private CourseDataHandler _courseDataHandler;
+    private RatingDataHandler _ratingDataHandler;
+    private UserDataHandler _userDataHandler;
 
-	public MainPageFragment()
-	{
-		// Required empty public constructor
-	}
+    public MainPageFragment() {
+        // Required empty public constructor
+    }
 
-	/**
-	 * Use this factory method to create a new instance of
-	 * this fragment using the provided parameters.
-	 *
-	 * @param param1 Parameter 1.
-	 * @param param2 Parameter 2.
-	 * @return A new instance of fragment MainPageFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
-	public static MainPageFragment newInstance( String param1, String param2 )
-	{
-		MainPageFragment fragment = new MainPageFragment();
-		Bundle args = new Bundle();
-		args.putString( ARG_PARAM1, param1 );
-		args.putString( ARG_PARAM2, param2 );
-		fragment.setArguments( args );
-		return fragment;
-	}
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment MainPageFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static MainPageFragment newInstance(String param1, String param2) {
+        MainPageFragment fragment = new MainPageFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-	@Override
-	public void onCreate( Bundle savedInstanceState )
-	{
-		super.onCreate( savedInstanceState );
-		if ( getArguments() != null ) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-	@Override
-	public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
-	{
-		// Inflate the layout for this fragment
-		return inflater.inflate( R.layout.fragment_main_page, container, false );
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_main_page, container, false);
+    }
 
-	@Override
-	public void onAttach( Context context )
-	{
-		super.onAttach( context );
-		//throw new RuntimeException( context.toString() + " must implement OnFragmentInteractionListener" );
-	}
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //throw new RuntimeException( context.toString() + " must implement OnFragmentInteractionListener" );
+    }
 
-	@Override
-	public void onDetach()
-	{
-		super.onDetach();
-		if ( _courseDataHandler != null ) _courseDataHandler.close();
-	}
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (_courseDataHandler != null) _courseDataHandler.close();
+    }
 
-	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState)
-	{
-		Log.d( LOG_TAG, "onActivityCreated" );
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.d(LOG_TAG, "onActivityCreated");
+        super.onActivityCreated(savedInstanceState);
 
 
-		_view = getView();
-		initDatabase();
-		testDB();
-		initScreenElements();
-	}
+        _view = getView();
+        initDatabase();
+        testDB();
+        initScreenElements();
+    }
 
-	public void initScreenElements()
-	{
-		_searchTextView = _view.findViewById( R.id.autoCompleteTextView );
+    public void initScreenElements() {
+        _searchTextView = _view.findViewById(R.id.autoCompleteTextView);
 
-		_searchTextView.setThreshold(2);
+        _searchTextView.setThreshold(2);
 
-		ArrayList<String> entries = _courseDataHandler.getAllCourseCodesAndNumbers();
+        ArrayList<String> entries = _courseDataHandler.getAllCourseCodesAndNumbers();
 
-		if (entries == null) {
-			Log.e("COURSE LIST ENTRIES", "Failed to fetch course listing");
-			return;
-		}
+        if (entries == null) {
+            Log.e("COURSE LIST ENTRIES", "Failed to fetch course listing");
+            return;
+        }
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, entries);
-		_searchTextView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getContext(), android.R.layout.select_dialog_item, entries);
+        _searchTextView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
 
-		_searchTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(getContext(), CourseRatingActivity.class);
-				intent.putExtra("COURSE_NAME", parent.getItemAtPosition(position).toString());
-				startActivity(intent);
-			}
-		});
-	}
+        _searchTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), CourseRatingActivity.class);
+                intent.putExtra("COURSE_NAME", parent.getItemAtPosition(position).toString());
+                startActivity(intent);
+            }
+        });
+    }
 
-	private void initDatabase()
-	{
-		_courseDataHandler = new CourseDataHandler( getContext() );
-		_ratingDataHandler = new RatingDataHandler(this.getContext());
+    private void initDatabase() {
+        _courseDataHandler = new CourseDataHandler(getContext());
+        _ratingDataHandler = new RatingDataHandler(this.getContext());
         _userDataHandler = new UserDataHandler(this.getContext());
     }
 
-	private void testDB() {
+    private void dropTables() {
+        _userDataHandler.dropTable("user_data", true);
+        _ratingDataHandler.dropTable("rating_data", true);
+        _courseDataHandler.dropTable("course_data", true);
+    }
 
-		// Add course data
+    private void testDB() {
+        // run me once:
+        // dropTables();
+
+        // Add course data
 		CourseDataModel courseDataSent = new CourseDataModel(
 				CourseDataModel.CourseCode.COMP,
 				8051,
-				"Advanced game development",
-				CourseDataModel.CourseMode.FT,
-				CourseDataModel.CourseSemester.Winter,
-				2019,
-				"Noureddin",
-				"Bourna"
+        "Advanced game development",
+                CourseDataModel.CourseMode.FT,
+                CourseDataModel.CourseSemester.Winter,
+                2019,
+                "Noureddin",
+                "Bourna"
 				);
-		_courseDataHandler.updateCourse( courseDataSent );
+        _courseDataHandler.updateCourse( courseDataSent );
 
-		// Add User Data
+        // Add User Data
         TextEncoder passEncode = new TextEncoder();
         UserDataModel userDataSent = new UserDataModel(
                 "peterriviera@gmail.com",
@@ -179,10 +178,10 @@ public class MainPageFragment extends Fragment
         // Add another User
 		UserDataModel userDataSent2 = new UserDataModel(
 				"stillusinghotmail@yahoo.com",
-				"password",
+                passEncode.getEncodedText("password"),
 				"Stan",
 				"Marsh",
-				"Kirk",
+				"Kirk"
 		);
 		_userDataHandler.updateUser( userDataSent2 );
 
@@ -214,5 +213,5 @@ public class MainPageFragment extends Fragment
 
 		RatingDataModel ratingDataRecievedSingle = _ratingDataHandler.getCourseRatingByUser(
 		        "A12653654", CourseDataModel.CourseCode.COMP, 8051);
-	}
+    }
 }
