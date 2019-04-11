@@ -6,6 +6,16 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.happi.ratemycourse.database.CourseDataHandler;
+import com.example.happi.ratemycourse.database.CourseDataModel;
+import com.example.happi.ratemycourse.database.RatingDataHandler;
+import com.example.happi.ratemycourse.database.RatingDataModel;
+import com.example.happi.ratemycourse.database.UserDataHandler;
+import com.example.happi.ratemycourse.database.UserDataModel;
+import com.example.happi.ratemycourse.util.TextEncoder;
+
+import static java.lang.Integer.parseInt;
+
 public class RatingActivityEditCreateActivity extends AppCompatActivity {
 
     // course name
@@ -16,6 +26,10 @@ public class RatingActivityEditCreateActivity extends AppCompatActivity {
     private SeekBar _readingSlider;
     private SeekBar _usefullnessSlider;
     private SeekBar _stressSlider;
+
+    private CourseDataHandler _courseDataHandler;
+    private RatingDataHandler _ratingDataHandler;
+    private UserDataHandler _userDataHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +89,33 @@ public class RatingActivityEditCreateActivity extends AppCompatActivity {
         int stressScore = _stressSlider.getProgress();
 
         // TODO update or insert scores
+        RatingDataModel newRating = new RatingDataModel(homeworkScore,
+                readingScore,
+                usefullnessScore,
+                stressScore
+        );
+
+        // TODO refactor into courseDataHandler
+//        View view = new View(this);
+//        _courseDataHandler = new CourseDataHandler(view.getContext());
+
+        String[] split = _courseName.split("(?=(....)+$)");
+//        String courseCode = split[0];
+//        CourseDataModel.CourseCode courseCode = CourseDataModel.CourseCode.valueOf(split[0]);
+//        int courseNumber = parseInt(split[1]);
+        CourseDataModel currentCourse = _courseDataHandler.getCourse(CourseDataModel.CourseCode.COMP, 8051);
+
+        // TODO get user data from login
+        TextEncoder passEncode = new TextEncoder();
+        UserDataModel newUser = new UserDataModel(
+                "stillusinghotmail@yahoo.com",
+                passEncode.getEncodedText("password"),
+                "Stan",
+                "Marsh",
+                "Kirk"
+        );
+
+        _ratingDataHandler.addRating(newRating, currentCourse, newUser);
 
         finish();
     }
