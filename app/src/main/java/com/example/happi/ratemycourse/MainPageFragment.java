@@ -149,7 +149,7 @@ public class MainPageFragment extends Fragment {
 
     private void testDB() {
         // run me once:
-        // dropTables();
+//         dropTables();
 
         // Add course data
 		CourseDataModel courseDataSent = new CourseDataModel(
